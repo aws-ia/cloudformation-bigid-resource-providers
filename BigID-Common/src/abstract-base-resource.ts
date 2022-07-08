@@ -215,9 +215,9 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         let model = this.newModel(request.desiredResourceState);
 
         if (!callbackContext.retry) {
-            // if (!(await this.assertExists(model, typeConfiguration))) {
-            //     throw new exceptions.NotFound(this.typeName, request.logicalResourceIdentifier);
-            // }
+            if (!(await this.assertExists(model, typeConfiguration))) {
+                throw new exceptions.NotFound(this.typeName, request.logicalResourceIdentifier);
+            }
 
             try {
                 await this.delete(model, typeConfiguration)
