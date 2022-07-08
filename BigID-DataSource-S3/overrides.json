@@ -1,0 +1,19 @@
+{
+  "CREATE": {
+    "/Name": "DGTest8",
+    "/Owners": [],
+    "/NumberOfParsingThreads": "5",
+    "/IsStsAuth": false,
+    "/IsCrossaccountAuth": false,
+    "/IsIamroleAuth": true,
+    "/IsAnonymousAuth": false,
+    "/IsCredentialsAuth": false,
+    "/Password": "",
+    "/SecurityTier": "1",
+    "/ScannerStrategy": "scan_all",
+    "/CredentialId": "",
+    "/CertificateId": "",
+    "/CustomFields": [],
+    "/Enabled": "no"
+  }
+}

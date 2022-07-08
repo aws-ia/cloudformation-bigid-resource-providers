@@ -1,0 +1,289 @@
+{
+    "typeName": "BigID::DataSource::S3",
+    "description": "An example resource schema demonstrating some basic constructs and validation rules.",
+    "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+    "typeConfiguration": {
+        "properties": {
+            "BigIdAccess": {
+                "$ref": "#/definitions/BigIdAccess"
+            }
+        },
+        "additionalProperties": false,
+        "required": [
+            "BigIdAccess"
+        ]
+    },
+    "definitions": {
+        "ConnectionResponse": {
+            "description": "Response returned from BigId",
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "description": "Name of connection",
+                    "type": "string",
+                    "pattern": "^[\\w\\-\\s\\(\\):]+$"
+                },
+                "Owners" : {
+                    "description": "owners",
+                    "type": "array",
+                    "insertionOrder": false,
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "Differential": {
+                    "description": "Differential Scan",
+                    "type": "boolean"
+                },
+                "NumberOfParsingThreads": {
+                    "type": "string",
+                    "description": "Number of Threads",
+                    "default": "5",
+                    "pattern": "^[0-9]*$"
+                },
+                "RdbIsSampleData": {
+                    "type": "boolean",
+                    "description": "Sample Scan Only"
+                },
+                "IncludeFileTypes": {
+                    "type": "boolean",
+                    "description": "includeExcludeFiles"
+                },
+                "Password":{
+                    "type": "string",
+                    "description": "AWS Secret Key"
+                },
+                "MetadataAclScanEnabled": {
+                    "type": "string",
+                    "description": "Will enable ACL for both Data Source and enumdata scans",
+                    "enum": ["true","false"]
+                },
+                "DsAclScanEnabled": {
+                    "type": "string",
+                    "description": "Will enable ACL for both Data Source and Metadata scans",
+                    "enum": ["true","false"]
+                },
+                "IsStsAuth": {
+                    "type": "boolean",
+                    "description": "AWS Authentication Type"
+                },
+                "IsCrossaccountAuth": {
+                    "type": "boolean",
+                    "description": "AWS Authentication Type"
+                },
+                "IsIamroleAuth": {
+                    "type": "boolean",
+                    "description": "AWS Authentication Type"
+                },
+                "IsAnonymousAuth": {
+                    "type": "boolean",
+                    "description": "AWS Authentication Type"
+                },
+                "IsCredentialsAuth": {
+                    "type": "boolean",
+                    "description": "AWS Authentication Type"
+                },
+
+                "SecurityTier": {
+                    "type": "string",
+                    "description": "Security Tier"
+                },
+                "OcrLanguages": {
+                    "type": "string",
+                    "enum": ["eng","chi_sim+chi_tra","ind","jpn","kor","tha","vie","deu","fra","bul"]
+                },
+                "ScannerStrategy": {
+                    "type": "string",
+                    "description": "scan_all"
+                },
+                "Enabled": {
+                    "type": "string",
+                    "enum": ["yes","no"]
+                },
+                "CredentialId": {
+                    "type": "string",
+                    "description": "Credentials ID"
+                },
+                "CertificateId": {
+                    "type": "string",
+                    "description": "Credentials ID"
+                },
+                "CustomFields": {
+                    "type": "array",
+                    "insertionOrder": false,
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "object"
+                    }
+                },
+                "Id": {
+                    "type": "string",
+                    "description": "Connection Id"
+                }
+            },
+            "additionalProperties": false
+        },
+        "BigIdAccess": {
+            "description": "Properties needed to access BigId",
+            "type": "object",
+            "properties": {
+                "Domain": {
+                    "type": "string",
+                    "description": "Domain used to access BigId"
+                },
+                "Username": {
+                    "type": "string"
+                },
+                "Password": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "properties": {
+        "Name": {
+            "description": "A TPS Code is automatically generated on creation and assigned as the unique identifier.",
+            "type": "string",
+            "pattern": "^[\\w\\-\\s\\(\\):]+$"
+        },
+        "Owners" : {
+            "description": "owners",
+            "type": "array",
+            "insertionOrder": false,
+            "uniqueItems": true,
+            "items": {
+                "type": "string"
+            }
+        },
+        "Differential": {
+           "description": "Differential Scan",
+            "type": "boolean"
+        },
+        "NumberOfParsingThreads": {
+            "type": "string",
+            "description": "Number of Threads",
+            "default": "5",
+            "pattern": "^[0-9]*$"
+        },
+        "RdbIsSampleData": {
+            "type": "boolean",
+            "description": "Sample Scan Only"
+        },
+        "IncludeFileTypes": {
+            "type": "boolean",
+            "description": "includeExcludeFiles"
+        },
+        "Password":{
+            "type": "string",
+            "description": "AWS Secret Key"
+        },
+        "MetadataAclScanEnabled": {
+            "type": "string",
+            "description": "Will enable ACL for both Data Source and enumdata scans",
+            "enum": ["true","false"]
+        },
+        "DsAclScanEnabled": {
+            "type": "string",
+            "description": "Will enable ACL for both Data Source and Metadata scans",
+            "enum": ["true","false"]
+        },
+        "IsStsAuth": {
+            "type": "boolean",
+            "description": "AWS Authentication Type"
+        },
+        "IsCrossaccountAuth": {
+            "type": "boolean",
+            "description": "AWS Authentication Type"
+        },
+        "IsIamroleAuth": {
+            "type": "boolean",
+            "description": "AWS Authentication Type"
+        },
+        "IsAnonymousAuth": {
+            "type": "boolean",
+            "description": "AWS Authentication Type"
+        },
+        "IsCredentialsAuth": {
+            "type": "boolean",
+            "description": "AWS Authentication Type"
+        },
+
+        "SecurityTier": {
+            "type": "string",
+            "description": "Security Tier"
+        },
+        "OcrLanguages": {
+            "type": "string",
+            "enum": ["eng","chi_sim+chi_tra","ind","jpn","kor","tha","vie","deu","fra","bul"]
+        },
+        "ScannerStrategy": {
+            "type": "string",
+            "description": "scan_all"
+        },
+        "Enabled": {
+            "type": "string",
+            "enum": ["yes","no"]
+            },
+        "CredentialId": {
+            "type": "string",
+            "description": "Credentials ID"
+        },
+        "CertificateId": {
+            "type": "string",
+            "description": "Credentials ID"
+        },
+        "CustomFields": {
+            "type": "array",
+            "insertionOrder": false,
+            "uniqueItems": true,
+            "items": {
+                "type": "object"
+            }
+        },
+        "Id": {
+            "type": "string",
+            "description": "Connection Id"
+        },
+        "ConnectionResponse": {
+            "$ref": "#/definitions/ConnectionResponse"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "Name"
+    ],
+    "createOnlyProperties": [
+        "/properties/Name"
+    ],
+    "readOnlyProperties": [
+        "/properties/Id",
+        "/properties/Connection"
+    ],
+    "primaryIdentifier": [
+        "/properties/Name"
+    ],
+    "handlers": {
+        "create": {
+            "permissions": [
+            ]
+        },
+        "read": {
+            "permissions": [
+            ]
+        },
+        "update": {
+            "permissions": [
+            ]
+        },
+        "delete": {
+            "permissions": [
+            ]
+        },
+        "list": {
+            "permissions": [
+            ]
+        }
+    }
+}
