@@ -1,6 +1,4 @@
-# BigID::DataSource::S3
-
-Manage a BigID S3 data source
+# BigID::DataSource::S3 Connection
 
 ## Syntax
 
@@ -10,120 +8,127 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 
 <pre>
 {
-    "Type" : "BigID::DataSource::S3",
-    "Properties" : {
-        "<a href="#name" title="Name">Name</a>" : <i>String</i>,
-        "<a href="#enabled" title="Enabled">Enabled</a>" : <i>Boolean</i>,
-        "<a href="#friendlyname" title="FriendlyName">FriendlyName</a>" : <i>String</i>,
-        "<a href="#description" title="Description">Description</a>" : <i>String</i>,
-        "<a href="#owners" title="Owners">Owners</a>" : <i>[ String, ... ]</i>,
-        "<a href="#awsauthenticationtype" title="AwsAuthenticationType">AwsAuthenticationType</a>" : <i>String</i>,
-        "<a href="#awsrolesessionname" title="AwsRoleSessionName">AwsRoleSessionName</a>" : <i>String</i>,
-        "<a href="#awsrolearn" title="AwsRoleArn">AwsRoleArn</a>" : <i>String</i>,
-        "<a href="#awsaccesskey" title="AwsAccessKey">AwsAccessKey</a>" : <i>String</i>,
-        "<a href="#awssecretkey" title="AwsSecretKey">AwsSecretKey</a>" : <i>String</i>,
-        "<a href="#awssessiontoken" title="AwsSessionToken">AwsSessionToken</a>" : <i>String</i>,
-        "<a href="#awsregion" title="AwsRegion">AwsRegion</a>" : <i>String</i>,
-        "<a href="#bucketname" title="BucketName">BucketName</a>" : <i>String</i>,
-        "<a href="#includeexcludefiles" title="IncludeExcludeFiles">IncludeExcludeFiles</a>" : <i>Boolean</i>,
-        "<a href="#filetypestoexclude" title="FileTypesToExclude">FileTypesToExclude</a>" : <i>String</i>,
-        "<a href="#foldertoscan" title="FolderToScan">FolderToScan</a>" : <i>String</i>,
-        "<a href="#scannergroup" title="ScannerGroup">ScannerGroup</a>" : <i>String</i>,
-        "<a href="#testconnectiontimeoutinseconds" title="TestConnectionTimeoutInSeconds">TestConnectionTimeoutInSeconds</a>" : <i>Double</i>,
-        "<a href="#customfields" title="CustomFields">CustomFields</a>" : <i>[ <a href="customfield.md">CustomField</a>, ... ]</i>,
-        "<a href="#businessowners" title="BusinessOwners">BusinessOwners</a>" : <i>[ <a href="user.md">User</a>, ... ]</i>,
-        "<a href="#itowners" title="ItOwners">ItOwners</a>" : <i>[ <a href="user.md">User</a>, ... ]</i>,
-        "<a href="#location" title="Location">Location</a>" : <i>String</i>,
-        "<a href="#scope" title="Scope">Scope</a>" : <i>String</i>,
-        "<a href="#securitytier" title="SecurityTier">SecurityTier</a>" : <i>String</i>,
-        "<a href="#comments" title="Comments">Comments</a>" : <i>String</i>,
-        "<a href="#numberofparsingthreads" title="NumberOfParsingThreads">NumberOfParsingThreads</a>" : <i>String</i>,
-        "<a href="#metadataaclscanenabled" title="MetadataAclScanEnabled">MetadataAclScanEnabled</a>" : <i>Boolean</i>,
-        "<a href="#dsaclscanenabled" title="DsAclScanEnabled">DsAclScanEnabled</a>" : <i>Boolean</i>,
-        "<a href="#enabledocr" title="EnabledOcr">EnabledOcr</a>" : <i>Boolean</i>,
-        "<a href="#ocrtimeout" title="OcrTimeout">OcrTimeout</a>" : <i>Double</i>,
-        "<a href="#ocrlanguages" title="OcrLanguages">OcrLanguages</a>" : <i>String</i>,
-        "<a href="#enableclustering" title="EnableClustering">EnableClustering</a>" : <i>Boolean</i>,
-        "<a href="#enableclassifiers" title="EnableClassifiers">EnableClassifiers</a>" : <i>Boolean</i>,
-        "<a href="#enableadvanceclassifiers" title="EnableAdvanceClassifiers">EnableAdvanceClassifiers</a>" : <i>Boolean</i>,
-        "<a href="#samplefolders" title="SampleFolders">SampleFolders</a>" : <i>Boolean</i>,
-        "<a href="#samplepercentage" title="SamplePercentage">SamplePercentage</a>" : <i>String</i>,
-        "<a href="#samplefilecontent" title="SampleFileContent">SampleFileContent</a>" : <i>Boolean</i>,
-        "<a href="#differentialscan" title="DifferentialScan">DifferentialScan</a>" : <i>Boolean</i>,
-        "<a href="#ismodifiedinxdays" title="IsModifiedInXDays">IsModifiedInXDays</a>" : <i>Boolean</i>,
-        "<a href="#xlastdays" title="XLastDays">XLastDays</a>" : <i>Double</i>,
-        "<a href="#scanwindowname" title="ScanWindowName">ScanWindowName</a>" : <i>String</i>,
-        "<a href="#parquetfileregex" title="ParquetFileRegex">ParquetFileRegex</a>" : <i>String</i>,
-    }
+    "<a href="#id" title="Id">Id</a>" : <i>String</i>,
+    "<a href="#name" title="Name">Name</a>" : <i>String</i>,
+    "<a href="#enabled" title="Enabled">Enabled</a>" : <i>Boolean</i>,
+    "<a href="#friendlyname" title="FriendlyName">FriendlyName</a>" : <i>String</i>,
+    "<a href="#description" title="Description">Description</a>" : <i>String</i>,
+    "<a href="#owners" title="Owners">Owners</a>" : <i>[ String, ... ]</i>,
+    "<a href="#awsauthenticationtype" title="AwsAuthenticationType">AwsAuthenticationType</a>" : <i>String</i>,
+    "<a href="#awsrolesessionname" title="AwsRoleSessionName">AwsRoleSessionName</a>" : <i>String</i>,
+    "<a href="#awsrolearn" title="AwsRoleArn">AwsRoleArn</a>" : <i>String</i>,
+    "<a href="#awsaccesskey" title="AwsAccessKey">AwsAccessKey</a>" : <i>String</i>,
+    "<a href="#awssecretkey" title="AwsSecretKey">AwsSecretKey</a>" : <i>String</i>,
+    "<a href="#awssessiontoken" title="AwsSessionToken">AwsSessionToken</a>" : <i>String</i>,
+    "<a href="#awsregion" title="AwsRegion">AwsRegion</a>" : <i>String</i>,
+    "<a href="#bucketname" title="BucketName">BucketName</a>" : <i>String</i>,
+    "<a href="#includeexcludefiles" title="IncludeExcludeFiles">IncludeExcludeFiles</a>" : <i>Boolean</i>,
+    "<a href="#filetypestoexclude" title="FileTypesToExclude">FileTypesToExclude</a>" : <i>String</i>,
+    "<a href="#foldertoscan" title="FolderToScan">FolderToScan</a>" : <i>String</i>,
+    "<a href="#scannergroup" title="ScannerGroup">ScannerGroup</a>" : <i>String</i>,
+    "<a href="#testconnectiontimeoutinseconds" title="TestConnectionTimeoutInSeconds">TestConnectionTimeoutInSeconds</a>" : <i>Double</i>,
+    "<a href="#customfields" title="CustomFields">CustomFields</a>" : <i>[ <a href="customfield.md">CustomField</a>, ... ]</i>,
+    "<a href="#businessowners" title="BusinessOwners">BusinessOwners</a>" : <i>[ <a href="user.md">User</a>, ... ]</i>,
+    "<a href="#itowners" title="ItOwners">ItOwners</a>" : <i>[ <a href="user.md">User</a>, ... ]</i>,
+    "<a href="#location" title="Location">Location</a>" : <i>String</i>,
+    "<a href="#scope" title="Scope">Scope</a>" : <i>String</i>,
+    "<a href="#securitytier" title="SecurityTier">SecurityTier</a>" : <i>String</i>,
+    "<a href="#comments" title="Comments">Comments</a>" : <i>String</i>,
+    "<a href="#numberofparsingthreads" title="NumberOfParsingThreads">NumberOfParsingThreads</a>" : <i>String</i>,
+    "<a href="#metadataaclscanenabled" title="MetadataAclScanEnabled">MetadataAclScanEnabled</a>" : <i>Boolean</i>,
+    "<a href="#dsaclscanenabled" title="DsAclScanEnabled">DsAclScanEnabled</a>" : <i>Boolean</i>,
+    "<a href="#enabledocr" title="EnabledOcr">EnabledOcr</a>" : <i>Boolean</i>,
+    "<a href="#ocrtimeout" title="OcrTimeout">OcrTimeout</a>" : <i>Double</i>,
+    "<a href="#ocrlanguages" title="OcrLanguages">OcrLanguages</a>" : <i>String</i>,
+    "<a href="#enableclustering" title="EnableClustering">EnableClustering</a>" : <i>Boolean</i>,
+    "<a href="#enableclassifiers" title="EnableClassifiers">EnableClassifiers</a>" : <i>Boolean</i>,
+    "<a href="#enableadvanceclassifiers" title="EnableAdvanceClassifiers">EnableAdvanceClassifiers</a>" : <i>Boolean</i>,
+    "<a href="#samplefolders" title="SampleFolders">SampleFolders</a>" : <i>Boolean</i>,
+    "<a href="#samplepercentage" title="SamplePercentage">SamplePercentage</a>" : <i>String</i>,
+    "<a href="#samplefilecontent" title="SampleFileContent">SampleFileContent</a>" : <i>Boolean</i>,
+    "<a href="#differentialscan" title="DifferentialScan">DifferentialScan</a>" : <i>Boolean</i>,
+    "<a href="#ismodifiedinxdays" title="IsModifiedInXDays">IsModifiedInXDays</a>" : <i>Boolean</i>,
+    "<a href="#xlastdays" title="XLastDays">XLastDays</a>" : <i>Double</i>,
+    "<a href="#scanwindowname" title="ScanWindowName">ScanWindowName</a>" : <i>String</i>,
+    "<a href="#parquetfileregex" title="ParquetFileRegex">ParquetFileRegex</a>" : <i>String</i>
 }
 </pre>
 
 ### YAML
 
 <pre>
-Type: BigID::DataSource::S3
-Properties:
-    <a href="#name" title="Name">Name</a>: <i>String</i>
-    <a href="#enabled" title="Enabled">Enabled</a>: <i>Boolean</i>
-    <a href="#friendlyname" title="FriendlyName">FriendlyName</a>: <i>String</i>
-    <a href="#description" title="Description">Description</a>: <i>String</i>
-    <a href="#owners" title="Owners">Owners</a>: <i>
+<a href="#id" title="Id">Id</a>: <i>String</i>
+<a href="#name" title="Name">Name</a>: <i>String</i>
+<a href="#enabled" title="Enabled">Enabled</a>: <i>Boolean</i>
+<a href="#friendlyname" title="FriendlyName">FriendlyName</a>: <i>String</i>
+<a href="#description" title="Description">Description</a>: <i>String</i>
+<a href="#owners" title="Owners">Owners</a>: <i>
       - String</i>
-    <a href="#awsauthenticationtype" title="AwsAuthenticationType">AwsAuthenticationType</a>: <i>String</i>
-    <a href="#awsrolesessionname" title="AwsRoleSessionName">AwsRoleSessionName</a>: <i>String</i>
-    <a href="#awsrolearn" title="AwsRoleArn">AwsRoleArn</a>: <i>String</i>
-    <a href="#awsaccesskey" title="AwsAccessKey">AwsAccessKey</a>: <i>String</i>
-    <a href="#awssecretkey" title="AwsSecretKey">AwsSecretKey</a>: <i>String</i>
-    <a href="#awssessiontoken" title="AwsSessionToken">AwsSessionToken</a>: <i>String</i>
-    <a href="#awsregion" title="AwsRegion">AwsRegion</a>: <i>String</i>
-    <a href="#bucketname" title="BucketName">BucketName</a>: <i>String</i>
-    <a href="#includeexcludefiles" title="IncludeExcludeFiles">IncludeExcludeFiles</a>: <i>Boolean</i>
-    <a href="#filetypestoexclude" title="FileTypesToExclude">FileTypesToExclude</a>: <i>String</i>
-    <a href="#foldertoscan" title="FolderToScan">FolderToScan</a>: <i>String</i>
-    <a href="#scannergroup" title="ScannerGroup">ScannerGroup</a>: <i>String</i>
-    <a href="#testconnectiontimeoutinseconds" title="TestConnectionTimeoutInSeconds">TestConnectionTimeoutInSeconds</a>: <i>Double</i>
-    <a href="#customfields" title="CustomFields">CustomFields</a>: <i>
+<a href="#awsauthenticationtype" title="AwsAuthenticationType">AwsAuthenticationType</a>: <i>String</i>
+<a href="#awsrolesessionname" title="AwsRoleSessionName">AwsRoleSessionName</a>: <i>String</i>
+<a href="#awsrolearn" title="AwsRoleArn">AwsRoleArn</a>: <i>String</i>
+<a href="#awsaccesskey" title="AwsAccessKey">AwsAccessKey</a>: <i>String</i>
+<a href="#awssecretkey" title="AwsSecretKey">AwsSecretKey</a>: <i>String</i>
+<a href="#awssessiontoken" title="AwsSessionToken">AwsSessionToken</a>: <i>String</i>
+<a href="#awsregion" title="AwsRegion">AwsRegion</a>: <i>String</i>
+<a href="#bucketname" title="BucketName">BucketName</a>: <i>String</i>
+<a href="#includeexcludefiles" title="IncludeExcludeFiles">IncludeExcludeFiles</a>: <i>Boolean</i>
+<a href="#filetypestoexclude" title="FileTypesToExclude">FileTypesToExclude</a>: <i>String</i>
+<a href="#foldertoscan" title="FolderToScan">FolderToScan</a>: <i>String</i>
+<a href="#scannergroup" title="ScannerGroup">ScannerGroup</a>: <i>String</i>
+<a href="#testconnectiontimeoutinseconds" title="TestConnectionTimeoutInSeconds">TestConnectionTimeoutInSeconds</a>: <i>Double</i>
+<a href="#customfields" title="CustomFields">CustomFields</a>: <i>
       - <a href="customfield.md">CustomField</a></i>
-    <a href="#businessowners" title="BusinessOwners">BusinessOwners</a>: <i>
+<a href="#businessowners" title="BusinessOwners">BusinessOwners</a>: <i>
       - <a href="user.md">User</a></i>
-    <a href="#itowners" title="ItOwners">ItOwners</a>: <i>
+<a href="#itowners" title="ItOwners">ItOwners</a>: <i>
       - <a href="user.md">User</a></i>
-    <a href="#location" title="Location">Location</a>: <i>String</i>
-    <a href="#scope" title="Scope">Scope</a>: <i>String</i>
-    <a href="#securitytier" title="SecurityTier">SecurityTier</a>: <i>String</i>
-    <a href="#comments" title="Comments">Comments</a>: <i>String</i>
-    <a href="#numberofparsingthreads" title="NumberOfParsingThreads">NumberOfParsingThreads</a>: <i>String</i>
-    <a href="#metadataaclscanenabled" title="MetadataAclScanEnabled">MetadataAclScanEnabled</a>: <i>Boolean</i>
-    <a href="#dsaclscanenabled" title="DsAclScanEnabled">DsAclScanEnabled</a>: <i>Boolean</i>
-    <a href="#enabledocr" title="EnabledOcr">EnabledOcr</a>: <i>Boolean</i>
-    <a href="#ocrtimeout" title="OcrTimeout">OcrTimeout</a>: <i>Double</i>
-    <a href="#ocrlanguages" title="OcrLanguages">OcrLanguages</a>: <i>String</i>
-    <a href="#enableclustering" title="EnableClustering">EnableClustering</a>: <i>Boolean</i>
-    <a href="#enableclassifiers" title="EnableClassifiers">EnableClassifiers</a>: <i>Boolean</i>
-    <a href="#enableadvanceclassifiers" title="EnableAdvanceClassifiers">EnableAdvanceClassifiers</a>: <i>Boolean</i>
-    <a href="#samplefolders" title="SampleFolders">SampleFolders</a>: <i>Boolean</i>
-    <a href="#samplepercentage" title="SamplePercentage">SamplePercentage</a>: <i>String</i>
-    <a href="#samplefilecontent" title="SampleFileContent">SampleFileContent</a>: <i>Boolean</i>
-    <a href="#differentialscan" title="DifferentialScan">DifferentialScan</a>: <i>Boolean</i>
-    <a href="#ismodifiedinxdays" title="IsModifiedInXDays">IsModifiedInXDays</a>: <i>Boolean</i>
-    <a href="#xlastdays" title="XLastDays">XLastDays</a>: <i>Double</i>
-    <a href="#scanwindowname" title="ScanWindowName">ScanWindowName</a>: <i>String</i>
-    <a href="#parquetfileregex" title="ParquetFileRegex">ParquetFileRegex</a>: <i>String</i>
+<a href="#location" title="Location">Location</a>: <i>String</i>
+<a href="#scope" title="Scope">Scope</a>: <i>String</i>
+<a href="#securitytier" title="SecurityTier">SecurityTier</a>: <i>String</i>
+<a href="#comments" title="Comments">Comments</a>: <i>String</i>
+<a href="#numberofparsingthreads" title="NumberOfParsingThreads">NumberOfParsingThreads</a>: <i>String</i>
+<a href="#metadataaclscanenabled" title="MetadataAclScanEnabled">MetadataAclScanEnabled</a>: <i>Boolean</i>
+<a href="#dsaclscanenabled" title="DsAclScanEnabled">DsAclScanEnabled</a>: <i>Boolean</i>
+<a href="#enabledocr" title="EnabledOcr">EnabledOcr</a>: <i>Boolean</i>
+<a href="#ocrtimeout" title="OcrTimeout">OcrTimeout</a>: <i>Double</i>
+<a href="#ocrlanguages" title="OcrLanguages">OcrLanguages</a>: <i>String</i>
+<a href="#enableclustering" title="EnableClustering">EnableClustering</a>: <i>Boolean</i>
+<a href="#enableclassifiers" title="EnableClassifiers">EnableClassifiers</a>: <i>Boolean</i>
+<a href="#enableadvanceclassifiers" title="EnableAdvanceClassifiers">EnableAdvanceClassifiers</a>: <i>Boolean</i>
+<a href="#samplefolders" title="SampleFolders">SampleFolders</a>: <i>Boolean</i>
+<a href="#samplepercentage" title="SamplePercentage">SamplePercentage</a>: <i>String</i>
+<a href="#samplefilecontent" title="SampleFileContent">SampleFileContent</a>: <i>Boolean</i>
+<a href="#differentialscan" title="DifferentialScan">DifferentialScan</a>: <i>Boolean</i>
+<a href="#ismodifiedinxdays" title="IsModifiedInXDays">IsModifiedInXDays</a>: <i>Boolean</i>
+<a href="#xlastdays" title="XLastDays">XLastDays</a>: <i>Double</i>
+<a href="#scanwindowname" title="ScanWindowName">ScanWindowName</a>: <i>String</i>
+<a href="#parquetfileregex" title="ParquetFileRegex">ParquetFileRegex</a>: <i>String</i>
 </pre>
 
 ## Properties
+
+#### Id
+
+Connection Id
+
+_Required_: No
+
+_Type_: String
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### Name
 
 Type data source name.
 
-_Required_: Yes
+_Required_: No
 
 _Type_: String
 
 _Pattern_: <code>^[\w\-\s\(\):]+$</code>
 
-_Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### Enabled
 
@@ -296,8 +301,6 @@ _Type_: Double
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### CustomFields
-
-Custom Parameters
 
 _Required_: No
 
@@ -526,20 +529,4 @@ _Required_: No
 _Type_: String
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-## Return Values
-
-### Ref
-
-When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the Name.
-
-### Fn::GetAtt
-
-The `Fn::GetAtt` intrinsic function returns a value for a specified attribute of this type. The following are the available attributes and sample return values.
-
-For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::GetAtt](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-getatt.html).
-
-#### Connection
-
-Returns the <code>Connection</code> value.
 
