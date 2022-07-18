@@ -23,13 +23,12 @@ export abstract class AbstractBigIdResource<ResourceModelType extends BaseModel,
             : e.response
                 ? e.response.status
                 : null;
-        switch (e.response.data.status) {
+        switch (status) {
             case 400:
-                throw new exceptions.InvalidRequest(errorMessage);
-            case 401:
-                throw new exceptions.AccessDenied(`Access denied, please check your API token: ${errorMessage}`);
             case 404:
                 throw new exceptions.NotFound(this.typeName, request.logicalResourceIdentifier);
+            case 401:
+                throw new exceptions.AccessDenied(`Access denied, please check your API token: ${errorMessage}`);
             case 429:
                 throw new exceptions.ServiceLimitExceeded(errorMessage);
             default:

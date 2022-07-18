@@ -39,7 +39,7 @@ export class BigIdClient {
         const token = await this.getSessionToken();
 
         return await axios.request<ResponseType>({
-            url: `${this.baseUrl}${path}`,
+            url: `https://${this.baseUrl}${path}`,
             params: params,
             method: method,
             data: body,

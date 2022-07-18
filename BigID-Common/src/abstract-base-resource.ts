@@ -111,10 +111,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         let model = this.newModel(request.desiredResourceState);
 
-        logger.log(`CREATE retry no ${callbackContext.retry}` );
-
         if (!callbackContext.retry) {
-            logger.log(`CREATE retry should be zero no ${callbackContext.retry}` );
             if (await this.assertExists(model, typeConfiguration)) {
                 throw new exceptions.AlreadyExists(this.typeName, request.logicalResourceIdentifier);
             }
@@ -133,7 +130,6 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
 
         try {
             const data = await this.get(model, typeConfiguration);
-            logger.log(`CREATE retry get returned ${JSON.stringify(data)}`);
 
             model = this.setModelFrom(model, data);
             return ProgressEvent.success<ProgressEvent<ResourceModelType, RetryableCallbackContext>>(model);

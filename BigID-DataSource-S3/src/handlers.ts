@@ -1,4 +1,4 @@
-import {Connection, ResourceModel, TypeConfigurationModel} from './models';
+import {Connection, CustomField, ResourceModel, TypeConfigurationModel} from './models';
 import {AbstractBigIdResource} from "../../BigID-Common/src/abstract-bigid-resource"
 import {BigIdClient} from "../../BigID-Common/src/bigid-client"
 
@@ -10,6 +10,19 @@ type ConnectionResponses = {
     ds_connections: any[]
 }
 
+type CustomFieldPayload = {
+    field_name: string;
+    field_value: string;
+    field_type: string;
+}
+
+type UserPayload = {
+    id: string
+    origin: string
+    email: string | null
+    type: 'business' | 'it'
+}
+
 class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connection, Connection, TypeConfigurationModel> {
 
     async get(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
@@ -18,7 +31,7 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
             `/api/v1/ds_connections/${model.name}`
         );
 
-        return this.payloadToConnection(response.data);
+        return this.payloadToConnection(response.data.ds_connection);
     }
 
     async list(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<ResourceModel[]> {
@@ -28,20 +41,22 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
         );
 
         return response.data.ds_connections.map(connectionPayload => new ResourceModel({
-            id: connectionPayload.id_,
+            name: connectionPayload.name,
             connection: this.payloadToConnection(connectionPayload)
         }));
     }
 
     async create(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
-        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest<ConnectionResponse>(
+        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest<Connection>(
             'post',
             `/api/v1/ds_connections`,
             undefined,
-            JSON.stringify(this.modelToPayload(model))
+            {
+                ds_connection: this.modelToPayload(model)
+            }
         );
 
-        return this.payloadToConnection(response.data.ds_connection);
+        return this.payloadToConnection(response.data);
     }
 
     async update(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
@@ -49,10 +64,12 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
             'put',
             `/api/v1/ds_connections/${model.name}`,
             undefined,
-            JSON.stringify(this.modelToPayload(model))
+            {
+                ds_connection: this.modelToPayload(model)
+            }
         );
 
-        return this.payloadToConnection(response.data.ds_connection)
+        return this.payloadToConnection(response.data)
     }
 
     async delete(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<void> {
@@ -75,7 +92,23 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
     }
 
     private modelToPayload(model: ResourceModel) {
-        const ownersV2 = Array.of(...model.businessOwners || []).concat(...model.itOwners || []);
+        const ownersV2: UserPayload[] = [];
+        if (model.businessOwners) {
+            ownersV2.concat(Array.of(...model.businessOwners || []).map(businessOwner => ({
+                id: businessOwner.id,
+                origin: businessOwner.origin,
+                email: businessOwner.email,
+                type: 'business'
+            })));
+        }
+        if (model.itOwners) {
+            ownersV2.concat(Array.of(...model.itOwners || []).map(itOwners => ({
+                id: itOwners.id,
+                origin: itOwners.origin,
+                email: itOwners.email,
+                type: 'it'
+            })));
+        }
 
         return {
             type: 'S3',
@@ -102,12 +135,7 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
                 field_value: customField.value_,
                 field_type: customField.type_
             })) : [],
-            owners_v2: ownersV2.map(businessOwner => ({
-                id: businessOwner.id,
-                origin: businessOwner.origin,
-                email: businessOwner.email,
-                type: businessOwner.type_
-            })),
+            owners_v2: ownersV2,
             location: model.location || null,
             scope: model.scope || null,
             security_tier: model.securityTier || '1',
@@ -119,7 +147,7 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
             ocr_timeout_in_seconds: model.ocrTimeout || 60,
             ocr_languages: model.ocrLanguages || 'eng',
             doc2vec_is_enabled: model.enableClustering || false,
-            classification_is_enabled: model.enableClustering || false,
+            classification_is_enabled: model.enableClassifiers || false,
             ner_classification_is_enabled: model.enableAdvanceClassifiers || false,
             Is_sample_folders: model.sampleFolders === true ? 'true' : 'false',
             folder_percent_to_sample: model.samplePercentage || 5,
@@ -132,7 +160,72 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
     }
 
     private payloadToConnection(payload: any) {
-        return new Connection({});
+        return new Connection({
+            id: payload.id,
+            type: payload.type,
+            parquetFileRegex: payload.parquetFileRegex,
+            name: payload.name,
+            enabled: payload.enabled === 'yes',
+            friendlyName: payload.friendly_name,
+            description: payload.description,
+            awsAuthenticationType: payload.awsAuthStrategy,
+            awsRoleSessionName: payload.aws_role_session_name,
+            awsRoleArn: payload.aws_role_arn,
+            awsAccessKey: payload.aws_access_key,
+            awsSecretKey: payload.aws_secret_key,
+            awsSessionToken: payload.aws_session_token,
+            awsRegion: payload.aws_region,
+            bucketName: payload.bucket_name,
+            includeExcludeFiles: payload.include_file_types,
+            fileTypesToExclude: payload.fileTypesToExclude,
+            folderToScan: payload.folder_to_scan,
+            scannerGroup: payload.scanner_group,
+            testConnectionTimeoutInSeconds: payload.testConnectionTimeoutInSeconds,
+            customFields: Array.isArray(payload.custom_fields)
+                ? (payload.custom_fields as CustomFieldPayload[])
+                    .map(customFieldPayload => new CustomField({
+                        name: customFieldPayload.field_name,
+                        value: customFieldPayload.field_value,
+                        type: customFieldPayload.field_type
+                    }))
+                : [],
+            businessOwners: (payload.owners_v2 as UserPayload[])
+                .filter(user => user.type === 'business')
+                .map(user => ({
+                    id: user.id,
+                    origin: user.origin,
+                    email: user.email,
+                    type: user.type
+                })),
+            itOwners: (payload.owners_v2 as UserPayload[])
+                .filter(user => user.type === 'it')
+                .map(user => ({
+                    id: user.id,
+                    origin: user.origin,
+                    email: user.email,
+                    type: user.type
+                })),
+            location: payload.location,
+            scope: payload.scope,
+            securityTier: payload.security_tier,
+            comments: payload.comment,
+            numberOfParsingThreads: payload.numberOfParsingThreads || 5,
+            metadataAclScanEnabled: payload.metadataAclScanEnabled === 'true',
+            dsAclScanEnabled: payload.dsAclScanEnabled === 'true',
+            enabledOcr: payload.is_ocr_enabled === 'true',
+            ocrTimeout: payload.ocr_timeout_in_seconds,
+            ocrLanguages: payload.ocr_languages,
+            enableClustering: payload.doc2vec_is_enabled,
+            enableClassifiers: payload.classification_is_enabled,
+            enableAdvanceClassifiers: payload.ner_classification_is_enabled,
+            sampleFolders: payload.Is_sample_folders === 'true',
+            samplePercentage: payload.folder_percent_to_sample,
+            sampleFileContent: payload.Is_sample_files === 'true',
+            differentialScan: payload.differential,
+            isModifiedInXDays: payload.is_modified_in_x_days,
+            xLastDays: payload.x_last_days,
+            scanWindowName: payload.scanWindowName
+        });
     }
 }
 
