@@ -14,7 +14,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib": "https://github.com/cloudsoft/cloudformation-cli-typescript-plugin/releases/download/cs-release/cloudformation-cli-typescript-plugin.tar.gz",
+    "@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib": "https://github.com/cloudsoft/cloudformation-cli-typescript-plugin/releases/download/cs-release/amazon-web-services-cloudformation-cloudformation-cli-typescript-lib-1.0.1.tgz",
     "axios": "^0.27.2"
   },
   "devDependencies": {
