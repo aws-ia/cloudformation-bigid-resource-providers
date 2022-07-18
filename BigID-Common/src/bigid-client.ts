@@ -20,24 +20,32 @@ export type PaginatedResponseType = {
     nextPageKey: string
 }
 
-export class DynatraceClient {
-    private readonly baseUrl: string;
-    private readonly apiToken: string;
+type SessionToken = {
+    auth_token: string
+}
 
-    constructor(baseUrl: string, apiToken: string) {
+export class BigIdClient {
+    private readonly baseUrl: string;
+    private readonly username: string;
+    private readonly password: string;
+
+    constructor(baseUrl: string, username: string, password: string) {
         this.baseUrl = baseUrl;
-        this.apiToken = apiToken;
+        this.username = username;
+        this.password = password;
     }
 
     public async doRequest<ResponseType>(method: 'get' | 'put' | 'post' | 'delete', path: string, params: any = {}, body?: {}): Promise<AxiosResponse<ResponseType>> {
+        const token = await this.getSessionToken();
+
         return await axios.request<ResponseType>({
             url: `${this.baseUrl}${path}`,
             params: params,
             method: method,
-            data: this.sanitizePayload(body),
+            data: body,
             headers: {
-                Authorization: `Api-Token ${this.apiToken}`,
-                'Content-type': 'application/json; charset=utf-8'
+                'Authorization': token,
+                'Content-type': 'application/json'
             }
         });
     }
@@ -62,26 +70,18 @@ export class DynatraceClient {
         return results;
     }
 
-    private sanitizePayload(model: { [key: string]: any }) {
-        if (!model) {
-            return model;
-        }
+    private async getSessionToken(): Promise<string> {
+        const {data} = await axios.post<SessionToken>(`https://${this.baseUrl}/api/v1/sessions`,
+            {
+                username: this.username,
+                password: this.password
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
 
-        return Object.keys(model).reduce((map, key) => {
-            let value = model[key];
-            if (value && value instanceof Object && !(value instanceof Array) && !(value instanceof Set)) {
-                value = this.sanitizePayload(value);
-            }
-            if (value && value instanceof Set) {
-                value = Array.of(...value);
-            }
-            if (value && Array.isArray(value)) {
-                value = value.map(item => item && item instanceof Object && !(item instanceof Array) && !(item instanceof Set)
-                    ? this.sanitizePayload(item)
-                    : item);
-            }
-            map[key.substring(0, 1).toLocaleLowerCase() + key.substring(1)] = value;
-            return map;
-        }, {} as { [key: string]: any })
+        return data.auth_token;
     }
 }
