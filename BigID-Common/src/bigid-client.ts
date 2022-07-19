@@ -1,19 +1,9 @@
 import axios, {AxiosResponse} from "axios";
 
 export type ApiErrorResponse = {
-    error: ApiError
-}
-export type ApiError = {
-    code: number
     message: string
-    constraintViolations?: ConstraintViolation[]
 }
-export type ConstraintViolation = {
-    path: string
-    message: string
-    parameterLocation: string
-    location?: string
-}
+
 export type PaginatedResponseType = {
     totalCount: number
     pageSize: number
