@@ -22,7 +22,9 @@
   },
   "UPDATE": {
     "/ParquetFileRegex": "",
-    "/Owners": [],
+    "/Owners": [
+      "person@acme.com"
+    ],
     "/AwsAuthenticationType": "isCredentialsAuth",
     "/AwsAccessKey": "AHDSHJD%$87874",
     "/AwsSecretKey": "QV4qXUr/DKDJSH*(&*DLKJL3489sLK",
@@ -33,7 +35,15 @@
     "/FileTypesToExclude": "png,gif,jpg",
     "/FolderToScan": "/path/to/folder",
     "/ScannerGroup": "default",
-    "/CustomFields": [],
+    "/CustomFields": [{
+      "Name": "Username",
+      "Value": "Foo",
+      "Type": "clear"
+    }, {
+      "Name": "Password",
+      "Value": "Bar",
+      "Type": "encrypted"
+    }],
     "/BusinessOwners": [],
     "/ItOwners": [],
     "/Location": "United Kingdom",

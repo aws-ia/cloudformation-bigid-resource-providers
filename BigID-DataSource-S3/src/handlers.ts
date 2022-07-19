@@ -1,4 +1,4 @@
-import {Connection, CustomField, ResourceModel, TypeConfigurationModel} from './models';
+import {Connection, CustomField, ResourceModel, TypeConfigurationModel, User} from './models';
 import {AbstractBigIdResource} from "../../BigID-Common/src/abstract-bigid-resource"
 import {BigIdClient} from "../../BigID-Common/src/bigid-client"
 
@@ -111,13 +111,13 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
         }
 
         return {
-            type: 'S3',
+            type: 's3',
             parquetFileRegex: model.parquetFileRegex || null,
             name: model.name || null,
             enabled: model.enabled === true ? 'yes' : 'no',
             friendly_name: model.friendlyName || null,
             description: model.description || null,
-            awsAuthStrategy: model.awsAuthenticationType || null,
+            [model.awsAuthenticationType]: true,
             aws_role_session_name: model.awsRoleSessionName || null,
             aws_role_arn: model.awsRoleArn || null,
             aws_access_key: model.awsAccessKey || null,
@@ -135,12 +135,13 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
                 field_value: customField.value_,
                 field_type: customField.type_
             })) : [],
+            owners: model.owners ? Array.of(...model.owners) : [],
             owners_v2: ownersV2,
             location: model.location || null,
             scope: model.scope || null,
             security_tier: model.securityTier || '1',
             comment: model.comments || null,
-            numberOfParsingThreads: model.numberOfParsingThreads || 5,
+            numberOfParsingThreads: `${model.numberOfParsingThreads || 5}`,
             metadataAclScanEnabled: model.metadataAclScanEnabled === true ? 'true' : 'false',
             dsAclScanEnabled: model.dsAclScanEnabled === true ? 'true' : 'false',
             is_ocr_enabled: model.enabledOcr === true ? 'true' : 'false',
@@ -156,7 +157,7 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
             is_modified_in_x_days: model.isModifiedInXDays || false,
             x_last_days: model.xLastDays || 7,
             scanWindowName: model.scanWindowName || null
-        }
+        };
     }
 
     private payloadToConnection(payload: any) {
@@ -189,22 +190,16 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
                         type: customFieldPayload.field_type
                     }))
                 : [],
-            businessOwners: (payload.owners_v2 as UserPayload[])
-                .filter(user => user.type === 'business')
-                .map(user => ({
-                    id: user.id,
-                    origin: user.origin,
-                    email: user.email,
-                    type: user.type
-                })),
-            itOwners: (payload.owners_v2 as UserPayload[])
-                .filter(user => user.type === 'it')
-                .map(user => ({
-                    id: user.id,
-                    origin: user.origin,
-                    email: user.email,
-                    type: user.type
-                })),
+            businessOwners: Array.isArray(payload.owners_v2)
+                ? (payload.owners_v2 as UserPayload[])
+                    .filter(user => user.type === 'business')
+                    .map(userPayload => new User(userPayload))
+                : [],
+            itOwners: Array.isArray(payload.owners_v2)
+                ? (payload.owners_v2 as UserPayload[])
+                    .filter(user => user.type === 'it')
+                    .map(userPayload => new User(userPayload))
+                : [],
             location: payload.location,
             scope: payload.scope,
             securityTier: payload.security_tier,

@@ -174,32 +174,14 @@ export class ResourceModel extends BaseModel {
     )
     testConnectionTimeoutInSeconds?: Optional<number>;
     @Expose({ name: 'CustomFields' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(CustomField, 'customFields', value, obj, [Set]),
-        {
-            toClassOnly: true,
-        }
-    )
-    customFields?: Optional<Set<CustomField>>;
+    @Type(() => CustomField)
+    customFields?: Optional<Array<CustomField>>;
     @Expose({ name: 'BusinessOwners' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(User, 'businessOwners', value, obj, [Set]),
-        {
-            toClassOnly: true,
-        }
-    )
-    businessOwners?: Optional<Set<User>>;
+    @Type(() => User)
+    businessOwners?: Optional<Array<User>>;
     @Expose({ name: 'ItOwners' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(User, 'itOwners', value, obj, [Set]),
-        {
-            toClassOnly: true,
-        }
-    )
-    itOwners?: Optional<Set<User>>;
+    @Type(() => User)
+    itOwners?: Optional<Array<User>>;
     @Expose({ name: 'Location' })
     @Transform(
         (value: any, obj: any) =>
@@ -477,15 +459,6 @@ export class User extends BaseModel {
         }
     )
     email?: Optional<string>;
-    @Expose({ name: 'Type' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'type_', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    type_?: Optional<string>;
 
 }
 
@@ -665,32 +638,14 @@ export class Connection extends BaseModel {
     )
     testConnectionTimeoutInSeconds?: Optional<number>;
     @Expose({ name: 'CustomFields' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(CustomField, 'customFields', value, obj, [Set]),
-        {
-            toClassOnly: true,
-        }
-    )
-    customFields?: Optional<Set<CustomField>>;
+    @Type(() => CustomField)
+    customFields?: Optional<Array<CustomField>>;
     @Expose({ name: 'BusinessOwners' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(User, 'businessOwners', value, obj, [Set]),
-        {
-            toClassOnly: true,
-        }
-    )
-    businessOwners?: Optional<Set<User>>;
+    @Type(() => User)
+    businessOwners?: Optional<Array<User>>;
     @Expose({ name: 'ItOwners' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(User, 'itOwners', value, obj, [Set]),
-        {
-            toClassOnly: true,
-        }
-    )
-    itOwners?: Optional<Set<User>>;
+    @Type(() => User)
+    itOwners?: Optional<Array<User>>;
     @Expose({ name: 'Location' })
     @Transform(
         (value: any, obj: any) =>
