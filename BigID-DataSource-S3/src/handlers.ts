@@ -2,13 +2,9 @@ import {Connection, CustomField, ResourceModel, TypeConfigurationModel, User} fr
 import {AbstractBigIdResource} from "../../BigID-Common/src/abstract-bigid-resource"
 import {BigIdClient} from "../../BigID-Common/src/bigid-client"
 
-type ConnectionResponse = {
-    ds_connection: any
-}
+type StringBoolean = 'true' | 'false'
 
-type ConnectionResponses = {
-    ds_connections: any[]
-}
+type SecurityTierPayload = '1' | '2' | '3' | '4' | '5'
 
 type CustomFieldPayload = {
     field_name: string;
@@ -23,6 +19,64 @@ type UserPayload = {
     type: 'business' | 'it'
 }
 
+type ConnectionPayload = {
+    id?: string
+    type: 's3'
+    parquetFileRegex: string
+    name: string
+    enabled: 'yes' | 'no'
+    friendly_name: string
+    description: string
+    isCredentialsAuth?: boolean
+    isIamRoleAuth?: boolean
+    isAnonymousAuth?: boolean
+    isCrossAccountAuth?: boolean
+    isSTSAuth?: boolean
+    aws_role_session_name: string
+    aws_role_arn: string
+    aws_access_key: string
+    aws_secret_key: string
+    aws_session_token: string
+    aws_region: string
+    bucket_name: string
+    include_file_types: boolean
+    fileTypesToExclude: string
+    folder_to_scan: string
+    scanner_group: string
+    testConnectionTimeoutInSeconds: number
+    custom_fields: CustomFieldPayload[]
+    owners: string[]
+    owners_v2: UserPayload[]
+    location: string
+    scope: string
+    security_tier: SecurityTierPayload
+    comment: string
+    numberOfParsingThreads: string
+    metadataAclScanEnabled: StringBoolean
+    dsAclScanEnabled: StringBoolean
+    is_ocr_enabled: StringBoolean
+    ocr_timeout_in_seconds: number
+    ocr_languages: string
+    doc2vec_is_enabled: boolean
+    classification_is_enabled: boolean
+    ner_classification_is_enabled: boolean
+    Is_sample_folders: StringBoolean
+    folder_percent_to_sample: string
+    Is_sample_files: StringBoolean
+    differential: boolean
+    is_modified_in_x_days: boolean
+    x_last_days: number
+    scanWindowName: string
+}
+
+type ConnectionResponse = {
+    ds_connection: ConnectionPayload
+}
+
+type ConnectionResponses = {
+    ds_connections: ConnectionPayload[]
+}
+
 class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connection, Connection, TypeConfigurationModel> {
 
     async get(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
@@ -31,7 +85,7 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
             `/api/v1/ds_connections/${model.name}`
         );
 
-        return this.payloadToConnection(response.data.ds_connection);
+        return this.connectionPayloadToConnection(response.data.ds_connection);
     }
 
     async list(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<ResourceModel[]> {
@@ -42,34 +96,34 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
 
         return response.data.ds_connections.map(connectionPayload => new ResourceModel({
             name: connectionPayload.name,
-            connection: this.payloadToConnection(connectionPayload)
+            connection: this.connectionPayloadToConnection(connectionPayload)
         }));
     }
 
     async create(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
-        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest<Connection>(
+        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest<ConnectionPayload>(
             'post',
             `/api/v1/ds_connections`,
             undefined,
             {
-                ds_connection: this.modelToPayload(model)
+                ds_connection: this.modelToConnectionPayload(model)
             }
         );
 
-        return this.payloadToConnection(response.data);
+        return this.connectionPayloadToConnection(response.data);
     }
 
     async update(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
-        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest<ConnectionResponse>(
+        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest<ConnectionPayload>(
             'put',
             `/api/v1/ds_connections/${model.name}`,
             undefined,
             {
-                ds_connection: this.modelToPayload(model)
+                ds_connection: this.modelToConnectionPayload(model)
             }
         );
 
-        return this.payloadToConnection(response.data)
+        return this.connectionPayloadToConnection(response.data)
     }
 
     async delete(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<void> {
@@ -91,7 +145,7 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
         return model;
     }
 
-    private modelToPayload(model: ResourceModel) {
+    private modelToConnectionPayload(model: ResourceModel): ConnectionPayload {
         const ownersV2: UserPayload[] = [];
         if (model.businessOwners) {
             ownersV2.concat(Array.of(...model.businessOwners || []).map(businessOwner => ({
@@ -139,7 +193,7 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
             owners_v2: ownersV2,
             location: model.location || null,
             scope: model.scope || null,
-            security_tier: model.securityTier || '1',
+            security_tier: (model.securityTier || '1') as SecurityTierPayload,
             comment: model.comments || null,
             numberOfParsingThreads: `${model.numberOfParsingThreads || 5}`,
             metadataAclScanEnabled: model.metadataAclScanEnabled === true ? 'true' : 'false',
@@ -151,7 +205,7 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
             classification_is_enabled: model.enableClassifiers || false,
             ner_classification_is_enabled: model.enableAdvanceClassifiers || false,
             Is_sample_folders: model.sampleFolders === true ? 'true' : 'false',
-            folder_percent_to_sample: model.samplePercentage || 5,
+            folder_percent_to_sample: `${model.samplePercentage || 5}`,
             Is_sample_files: model.sampleFileContent === true ? 'true' : 'false',
             differential: model.differentialScan || false,
             is_modified_in_x_days: model.isModifiedInXDays || false,
@@ -160,7 +214,21 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
         };
     }
 
-    private payloadToConnection(payload: any) {
+    private connectionPayloadToConnection(payload: ConnectionPayload): Connection {
+        let awsAuthenticationType = 'isCredentialsAuth'
+        if (payload.isIamRoleAuth) {
+            awsAuthenticationType = 'isIamRoleAuth'
+        }
+        if (payload.isAnonymousAuth) {
+            awsAuthenticationType = 'isAnonymousAuth'
+        }
+        if (payload.isCrossAccountAuth) {
+            awsAuthenticationType = 'isCrossAccountAuth'
+        }
+        if (payload.isSTSAuth) {
+            awsAuthenticationType = 'isSTSAuth'
+        }
+
         return new Connection({
             id: payload.id,
             type: payload.type,
@@ -169,7 +237,7 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
             enabled: payload.enabled === 'yes',
             friendlyName: payload.friendly_name,
             description: payload.description,
-            awsAuthenticationType: payload.awsAuthStrategy,
+            awsAuthenticationType: awsAuthenticationType,
             awsRoleSessionName: payload.aws_role_session_name,
             awsRoleArn: payload.aws_role_arn,
             awsAccessKey: payload.aws_access_key,
@@ -186,19 +254,27 @@ class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connecti
                 ? (payload.custom_fields as CustomFieldPayload[])
                     .map(customFieldPayload => new CustomField({
                         name: customFieldPayload.field_name,
-                        value: customFieldPayload.field_value,
-                        type: customFieldPayload.field_type
+                        value_: customFieldPayload.field_value,
+                        type_: customFieldPayload.field_type
                     }))
                 : [],
             businessOwners: Array.isArray(payload.owners_v2)
                 ? (payload.owners_v2 as UserPayload[])
                     .filter(user => user.type === 'business')
-                    .map(userPayload => new User(userPayload))
+                    .map(userPayload => new User({
+                        id: userPayload.id,
+                        email: userPayload.email,
+                        origin: userPayload.origin
+                    }))
                 : [],
             itOwners: Array.isArray(payload.owners_v2)
                 ? (payload.owners_v2 as UserPayload[])
                     .filter(user => user.type === 'it')
-                    .map(userPayload => new User(userPayload))
+                    .map(userPayload => new User({
+                        id: userPayload.id,
+                        email: userPayload.email,
+                        origin: userPayload.origin
+                    }))
                 : [],
             location: payload.location,
             scope: payload.scope,
