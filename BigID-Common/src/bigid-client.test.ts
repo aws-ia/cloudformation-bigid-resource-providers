@@ -1,20 +1,35 @@
-import {DynatraceClient, PaginatedResponseType} from "./dynatrace-client";
+import {BigIdClient, PaginatedResponseType} from "./bigid-client";
 import axios from "axios";
 import Mock = jest.Mock;
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-mockedAxios.request.mockResolvedValue({});
+mockedAxios.post.mockResolvedValue({data: {auth_token: 'token'}});
+mockedAxios.request.mockResolvedValue({data: {}});
 
 type TestPaginationResults = {
     results: number[]
 } & PaginatedResponseType;
 
-describe('DynatraceClient', () => {
+describe('BigIDClient', () => {
     describe('doRequest', () => {
-        const baseUrl = 'https://acme.com';
-        const token = 'aabbccddee';
-        const testInstance = new DynatraceClient(baseUrl, token);
+        const baseUrl = 'acme.com';
+        const username = 'username';
+        const password = 'password';
+        const token = 'token';
+        const testInstance = new BigIdClient(baseUrl, username, password);
+
+        it('use the username and password to get the authentication token', async () => {
+            await testInstance.doRequest('get', '/');
+
+            expect(mockedAxios.post).toHaveBeenCalledWith(
+                `https://${baseUrl}/api/v1/sessions`,
+                {
+                    username: username,
+                    password: password
+                },
+                expect.any(Object));
+        });
 
         it('sets the request URL based on the main URL + path', async () => {
             const path = '/foo/bar';
@@ -22,7 +37,7 @@ describe('DynatraceClient', () => {
             await testInstance.doRequest('get', path);
 
             expect(mockedAxios.request).toHaveBeenCalledWith(expect.objectContaining({
-                url: `${baseUrl}${path}`
+                url: `https://${baseUrl}${path}`
             }));
         });
 
@@ -35,8 +50,8 @@ describe('DynatraceClient', () => {
 
             expect(mockedAxios.request).toHaveBeenCalledWith(expect.objectContaining({
                 headers: {
-                    Authorization: `Api-Token ${token}`,
-                    'Content-type': 'application/json; charset=utf-8'
+                    Authorization: `${token}`,
+                    'Content-type': 'application/json'
                 }
             }));
         });
@@ -73,69 +88,13 @@ describe('DynatraceClient', () => {
                 method: method
             }));
         });
-
-
-
-        it.each([
-            [{
-                Foo: 'foo',
-                baR: 123,
-                HelloWorld: 'Hi'
-            }, {
-                foo: 'foo',
-                baR: 123,
-                helloWorld: 'Hi'
-            }],
-            [{
-                HelloWorld: {
-                    Foo: 'foo',
-                    baR: 123,
-                    HelloWorld: 'Hi'
-                }
-            }, {
-                helloWorld: {
-                    foo: 'foo',
-                    baR: 123,
-                    helloWorld: 'Hi'
-                }
-            }],
-            [{
-                HelloWorld: [
-                    'foo',
-                    ['hello', 'world'],
-                    {
-                        foo: 'foo',
-                        baR: 123,
-                        helloWorld: 'Hi'
-                    }
-                ]
-            }, {
-                helloWorld: [
-                    'foo',
-                    ['hello', 'world'],
-                    {
-                        foo: 'foo',
-                        baR: 123,
-                        helloWorld: 'Hi'
-                    }
-                ]
-            }]
-        ])('converts payload keys to camelCase', async (input, output) => {
-            mockedAxios.request.mockResolvedValueOnce({});
-
-            await testInstance.doRequest('get', 'foo/bar', undefined, input);
-
-            expect(mockedAxios.request).toHaveBeenCalledWith(expect.objectContaining({
-                data: output
-            }));
-        });
     });
 
     describe('paginate', () => {
-        let testInstance: DynatraceClient;
+        let testInstance: BigIdClient;
 
         beforeEach(() => {
-            testInstance = new DynatraceClient('https://acme.com', 'abcdefg');
+            testInstance = new BigIdClient('acme.com', 'username', 'password');
             testInstance.doRequest = jest.fn().mockResolvedValue({});
         });
 
@@ -144,7 +103,7 @@ describe('DynatraceClient', () => {
         });
 
         it.each([
-           1, 3, 5, 20, 100
+            1, 3, 5, 20, 100
         ])('calls "doRequest" for each %d page(s)', async (pageCount) => {
             const nextPageParams = {
                 nextPageKey: 'a-b-c-e-d-f'
