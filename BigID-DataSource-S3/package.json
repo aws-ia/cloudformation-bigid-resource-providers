@@ -3,15 +3,15 @@
     "version": "0.1.0",
     "description": "AWS custom resource provider named BigID::DataSource::S3.",
     "private": true,
-    "main": "dist/handlers.js",
+    "main": "dist/BigID-DataSource-S3/src/handlers.js",
     "files": [
         "dist"
     ],
     "scripts": {
         "build": "npx tsc",
+        "watch": "npx tsc -w",
         "prepack": "npm run build",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "watch": "npx tsc -w"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
         "@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib": "https://github.com/cloudsoft/cloudformation-cli-typescript-plugin/releases/download/cs-release/amazon-web-services-cloudformation-cloudformation-cli-typescript-lib-1.0.1.tgz",

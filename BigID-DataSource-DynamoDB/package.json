@@ -3,12 +3,13 @@
     "version": "0.1.0",
     "description": "AWS custom resource provider named BigID::DataSource::DynamoDB.",
     "private": true,
-    "main": "dist/handlers.js",
+    "main": "dist/BigID-DataSource-DynamoDB/src/handlers.js",
     "files": [
         "dist"
     ],
     "scripts": {
         "build": "npx tsc",
+        "watch": "npx tsc -w",
         "prepack": "npm run build",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
