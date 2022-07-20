@@ -11,9 +11,12 @@ export abstract class AbstractBigIdResource<ResourceModelType extends BaseModel,
 
     processRequestException(e: AxiosError<ApiErrorResponse>, request: ResourceHandlerRequest<ResourceModelType>) {
         const errors = [e.message];
-        const apiErrorResponse = e.response?.data?.message;
-        if (apiErrorResponse) {
-            errors.push(`[API message] ${apiErrorResponse}`);
+        const apiErrorResponse = e.response?.data;
+        if (apiErrorResponse?.message) {
+            errors.push(`[API message] ${apiErrorResponse.message}`);
+        }
+        if (apiErrorResponse?.detail) {
+            errors.push(`[API detail] ${apiErrorResponse.detail}`);
         }
         const errorMessage = errors.join('\n');
 
@@ -24,10 +27,17 @@ export abstract class AbstractBigIdResource<ResourceModelType extends BaseModel,
                 : null;
         switch (status) {
             case 400:
+                throw new exceptions.InvalidRequest(errorMessage);
+            case 401:
+                throw new exceptions.InvalidCredentials(errorMessage);
+            case 402:
+                throw new exceptions.ServiceInternalError(errorMessage);
+            case 403:
+                throw new exceptions.AccessDenied(`Access denied, please check your API domain, username and password: ${errorMessage}`);
             case 404:
                 throw new exceptions.NotFound(this.typeName, request.logicalResourceIdentifier);
-            case 401:
-                throw new exceptions.AccessDenied(`Access denied, please check your API token: ${errorMessage}`);
+            case 409:
+                throw new exceptions.ResourceConflict(errorMessage);
             case 429:
                 throw new exceptions.ServiceLimitExceeded(errorMessage);
             default:

@@ -1,5 +1,5 @@
 import {Connection, CustomField, ResourceModel, TypeConfigurationModel, User} from './models';
-import {AbstractBigIdResource} from "../../BigID-Common/src/abstract-bigid-resource"
+import {AbstractBigIdDatasourceResource} from "../../BigID-Common/src/abstract-bigid-datasource-resource"
 import {BigIdClient} from "../../BigID-Common/src/bigid-client"
 
 type SecurityTierPayload = '1' | '2' | '3' | '4' | '5'
@@ -60,7 +60,7 @@ type ConnectionResponses = {
     ds_connections: ConnectionPayload[]
 }
 
-class Resource extends AbstractBigIdResource<ResourceModel, Connection, Connection, Connection, TypeConfigurationModel> {
+class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection, Connection, Connection, TypeConfigurationModel> {
 
     async get(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
         const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest<ConnectionResponse>(

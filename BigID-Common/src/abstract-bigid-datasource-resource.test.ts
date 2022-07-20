@@ -1,6 +1,5 @@
-import {AbstractBigIdResource} from "./abstract-bigid-resource";
 import {BaseModel, ResourceHandlerRequest} from "@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib";
-import {AxiosError, AxiosResponse} from "axios";
+import {AxiosError} from "axios";
 import {
     AccessDenied,
     InternalFailure,
@@ -12,8 +11,9 @@ import {
     ServiceLimitExceeded
 } from "@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib/dist/exceptions";
 import {ApiErrorResponse} from "./bigid-client";
+import {AbstractBigIdDatasourceResource} from "./abstract-bigid-datasource-resource";
 
-class TestAbstractBigIdResource extends AbstractBigIdResource<BaseModel, {}, {}, {}, {}> {
+class TestAbstractBigIdDatasourceResource extends AbstractBigIdDatasourceResource<BaseModel, {}, {}, {}, {}> {
     create(model: BaseModel): Promise<{}> {
         return Promise.resolve({});
     }
@@ -43,12 +43,25 @@ class TestAbstractBigIdResource extends AbstractBigIdResource<BaseModel, {}, {},
     }
 }
 
-describe('AbstractBigIdResource', () => {
+describe('AbstractBigIdDatasourceResource', () => {
     describe('processRequestException', () => {
-        let testInstance: TestAbstractBigIdResource;
+        let testInstance: TestAbstractBigIdDatasourceResource;
 
         beforeAll(() => {
-            testInstance = new TestAbstractBigIdResource('foo', BaseModel, BaseModel);
+            testInstance = new TestAbstractBigIdDatasourceResource('foo', BaseModel, BaseModel);
+        });
+
+        it('throws a "NotFound" exception if the response is a 400 and contains "Unable to locate"', () => {
+            const error = 'Forced error - Unable to locate the data source';
+            let axiosError = new AxiosError<ApiErrorResponse>(error);
+            axiosError.status = '400';
+
+            try {
+                testInstance.processRequestException(axiosError, {logicalResourceIdentifier: 'foo'} as ResourceHandlerRequest<BaseModel>);
+                fail('This should have thrown');
+            } catch (e) {
+                expect(e).toBeInstanceOf(NotFound);
+            }
         });
 
         it.each([
@@ -62,7 +75,7 @@ describe('AbstractBigIdResource', () => {
             [InternalFailure, '500'],
             [InternalFailure, null],
             [InternalFailure, undefined]
-        ])('throws a %p if the request has a HTTP %s status code', (errorType, statusCode) => {
+        ])('rethrows original exception %p (with HTTP %s status code) otherwise', (errorType, statusCode) => {
             const error = 'Forced error';
             let axiosError = new AxiosError<ApiErrorResponse>(error);
             axiosError.status = statusCode;
@@ -77,27 +90,6 @@ describe('AbstractBigIdResource', () => {
                 } else {
                     expect(e.message).toContain(error);
                 }
-            }
-        });
-
-        it('returns the message and details from the API, if any', () => {
-            const error = 'Forced error';
-            let response: ApiErrorResponse = {
-                message: 'API error',
-                detail: 'API detail'
-            };
-            const axiosError = new AxiosError<ApiErrorResponse>(error, undefined, undefined, undefined, {
-                data: response
-            } as AxiosResponse);
-            axiosError.status = '500';
-
-            try {
-                testInstance.processRequestException(axiosError, {logicalResourceIdentifier: 'foo'} as ResourceHandlerRequest<BaseModel>);
-                fail('This should have thrown');
-            } catch (e) {
-                expect(e.message).toContain(error);
-                expect(e.message).toContain(response.message);
-                expect(e.message).toContain(response.detail);
             }
         });
     });

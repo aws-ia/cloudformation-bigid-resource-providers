@@ -2,6 +2,8 @@ import axios, {AxiosResponse} from "axios";
 
 export type ApiErrorResponse = {
     message: string
+    status?: number
+    detail?: string
 }
 
 export type PaginatedResponseType = {
