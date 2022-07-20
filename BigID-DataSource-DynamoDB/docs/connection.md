@@ -1,6 +1,4 @@
-# BigID::DataSource::DynamoDB
-
-An example resource schema demonstrating some basic constructs and validation rules.
+# BigID::DataSource::DynamoDB Connection
 
 ## Syntax
 
@@ -10,94 +8,101 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 
 <pre>
 {
-    "Type" : "BigID::DataSource::DynamoDB",
-    "Properties" : {
-        "<a href="#name" title="Name">Name</a>" : <i>String</i>,
-        "<a href="#enabled" title="Enabled">Enabled</a>" : <i>Boolean</i>,
-        "<a href="#friendlyname" title="FriendlyName">FriendlyName</a>" : <i>String</i>,
-        "<a href="#description" title="Description">Description</a>" : <i>String</i>,
-        "<a href="#authenticationmethod" title="AuthenticationMethod">AuthenticationMethod</a>" : <i>String</i>,
-        "<a href="#awsaccesskey" title="AwsAccessKey">AwsAccessKey</a>" : <i>String</i>,
-        "<a href="#awssecretkey" title="AwsSecretKey">AwsSecretKey</a>" : <i>String</i>,
-        "<a href="#awssessiontoken" title="AwsSessionToken">AwsSessionToken</a>" : <i>String</i>,
-        "<a href="#credentialid" title="CredentialId">CredentialId</a>" : <i>String</i>,
-        "<a href="#dynamodbtablenames" title="DynamodbTableNames">DynamodbTableNames</a>" : <i>[ String, ... ]</i>,
-        "<a href="#awsregion" title="AwsRegion">AwsRegion</a>" : <i>String</i>,
-        "<a href="#scannergroup" title="ScannerGroup">ScannerGroup</a>" : <i>String</i>,
-        "<a href="#testconnectiontimeoutinseconds" title="TestConnectionTimeoutInSeconds">TestConnectionTimeoutInSeconds</a>" : <i>Double</i>,
-        "<a href="#customfields" title="CustomFields">CustomFields</a>" : <i>[ <a href="customfield.md">CustomField</a>, ... ]</i>,
-        "<a href="#businessowners" title="BusinessOwners">BusinessOwners</a>" : <i>[ <a href="user.md">User</a>, ... ]</i>,
-        "<a href="#itowners" title="ItOwners">ItOwners</a>" : <i>[ <a href="user.md">User</a>, ... ]</i>,
-        "<a href="#location" title="Location">Location</a>" : <i>String</i>,
-        "<a href="#scope" title="Scope">Scope</a>" : <i>String</i>,
-        "<a href="#securitytier" title="SecurityTier">SecurityTier</a>" : <i>String</i>,
-        "<a href="#comments" title="Comments">Comments</a>" : <i>String</i>,
-        "<a href="#scantimeoutinseconds" title="ScanTimeoutInSeconds">ScanTimeoutInSeconds</a>" : <i>Double</i>,
-        "<a href="#numberofparsingthreads" title="NumberOfParsingThreads">NumberOfParsingThreads</a>" : <i>String</i>,
-        "<a href="#enablestructuredclustering" title="EnableStructuredClustering">EnableStructuredClustering</a>" : <i>Boolean</i>,
-        "<a href="#enableclassifiers" title="EnableClassifiers">EnableClassifiers</a>" : <i>Boolean</i>,
-        "<a href="#samplescanonly" title="SampleScanOnly">SampleScanOnly</a>" : <i>Boolean</i>,
-        "<a href="#enableadvanceclassifiers" title="EnableAdvanceClassifiers">EnableAdvanceClassifiers</a>" : <i>Boolean</i>,
-        "<a href="#rdbsampledatamaxsize" title="RdbSampleDataMaxSize">RdbSampleDataMaxSize</a>" : <i>String</i>,
-        "<a href="#scanwindowname" title="ScanWindowName">ScanWindowName</a>" : <i>String</i>,
-        "<a href="#iscorrelationsetsupported" title="IsCorrelationSetSupported">IsCorrelationSetSupported</a>" : <i>Boolean</i>,
-    }
+    "<a href="#id" title="Id">Id</a>" : <i>String</i>,
+    "<a href="#name" title="Name">Name</a>" : <i>String</i>,
+    "<a href="#enabled" title="Enabled">Enabled</a>" : <i>Boolean</i>,
+    "<a href="#friendlyname" title="FriendlyName">FriendlyName</a>" : <i>String</i>,
+    "<a href="#description" title="Description">Description</a>" : <i>String</i>,
+    "<a href="#authenticationmethod" title="AuthenticationMethod">AuthenticationMethod</a>" : <i>String</i>,
+    "<a href="#awsaccesskey" title="AwsAccessKey">AwsAccessKey</a>" : <i>String</i>,
+    "<a href="#awssecretkey" title="AwsSecretKey">AwsSecretKey</a>" : <i>String</i>,
+    "<a href="#awssessiontoken" title="AwsSessionToken">AwsSessionToken</a>" : <i>String</i>,
+    "<a href="#credentialid" title="CredentialId">CredentialId</a>" : <i>String</i>,
+    "<a href="#dynamodbtablenames" title="DynamodbTableNames">DynamodbTableNames</a>" : <i>[ String, ... ]</i>,
+    "<a href="#awsregion" title="AwsRegion">AwsRegion</a>" : <i>String</i>,
+    "<a href="#scannergroup" title="ScannerGroup">ScannerGroup</a>" : <i>String</i>,
+    "<a href="#testconnectiontimeoutinseconds" title="TestConnectionTimeoutInSeconds">TestConnectionTimeoutInSeconds</a>" : <i>Double</i>,
+    "<a href="#customfields" title="CustomFields">CustomFields</a>" : <i>[ <a href="customfield.md">CustomField</a>, ... ]</i>,
+    "<a href="#businessowners" title="BusinessOwners">BusinessOwners</a>" : <i>[ <a href="user.md">User</a>, ... ]</i>,
+    "<a href="#itowners" title="ItOwners">ItOwners</a>" : <i>[ <a href="user.md">User</a>, ... ]</i>,
+    "<a href="#location" title="Location">Location</a>" : <i>String</i>,
+    "<a href="#scope" title="Scope">Scope</a>" : <i>String</i>,
+    "<a href="#securitytier" title="SecurityTier">SecurityTier</a>" : <i>String</i>,
+    "<a href="#comments" title="Comments">Comments</a>" : <i>String</i>,
+    "<a href="#scantimeoutinseconds" title="ScanTimeoutInSeconds">ScanTimeoutInSeconds</a>" : <i>Double</i>,
+    "<a href="#numberofparsingthreads" title="NumberOfParsingThreads">NumberOfParsingThreads</a>" : <i>String</i>,
+    "<a href="#enablestructuredclustering" title="EnableStructuredClustering">EnableStructuredClustering</a>" : <i>Boolean</i>,
+    "<a href="#enableclassifiers" title="EnableClassifiers">EnableClassifiers</a>" : <i>Boolean</i>,
+    "<a href="#samplescanonly" title="SampleScanOnly">SampleScanOnly</a>" : <i>Boolean</i>,
+    "<a href="#enableadvanceclassifiers" title="EnableAdvanceClassifiers">EnableAdvanceClassifiers</a>" : <i>Boolean</i>,
+    "<a href="#rdbsampledatamaxsize" title="RdbSampleDataMaxSize">RdbSampleDataMaxSize</a>" : <i>String</i>,
+    "<a href="#scanwindowname" title="ScanWindowName">ScanWindowName</a>" : <i>String</i>,
+    "<a href="#iscorrelationsetsupported" title="IsCorrelationSetSupported">IsCorrelationSetSupported</a>" : <i>Boolean</i>
 }
 </pre>
 
 ### YAML
 
 <pre>
-Type: BigID::DataSource::DynamoDB
-Properties:
-    <a href="#name" title="Name">Name</a>: <i>String</i>
-    <a href="#enabled" title="Enabled">Enabled</a>: <i>Boolean</i>
-    <a href="#friendlyname" title="FriendlyName">FriendlyName</a>: <i>String</i>
-    <a href="#description" title="Description">Description</a>: <i>String</i>
-    <a href="#authenticationmethod" title="AuthenticationMethod">AuthenticationMethod</a>: <i>String</i>
-    <a href="#awsaccesskey" title="AwsAccessKey">AwsAccessKey</a>: <i>String</i>
-    <a href="#awssecretkey" title="AwsSecretKey">AwsSecretKey</a>: <i>String</i>
-    <a href="#awssessiontoken" title="AwsSessionToken">AwsSessionToken</a>: <i>String</i>
-    <a href="#credentialid" title="CredentialId">CredentialId</a>: <i>String</i>
-    <a href="#dynamodbtablenames" title="DynamodbTableNames">DynamodbTableNames</a>: <i>
+<a href="#id" title="Id">Id</a>: <i>String</i>
+<a href="#name" title="Name">Name</a>: <i>String</i>
+<a href="#enabled" title="Enabled">Enabled</a>: <i>Boolean</i>
+<a href="#friendlyname" title="FriendlyName">FriendlyName</a>: <i>String</i>
+<a href="#description" title="Description">Description</a>: <i>String</i>
+<a href="#authenticationmethod" title="AuthenticationMethod">AuthenticationMethod</a>: <i>String</i>
+<a href="#awsaccesskey" title="AwsAccessKey">AwsAccessKey</a>: <i>String</i>
+<a href="#awssecretkey" title="AwsSecretKey">AwsSecretKey</a>: <i>String</i>
+<a href="#awssessiontoken" title="AwsSessionToken">AwsSessionToken</a>: <i>String</i>
+<a href="#credentialid" title="CredentialId">CredentialId</a>: <i>String</i>
+<a href="#dynamodbtablenames" title="DynamodbTableNames">DynamodbTableNames</a>: <i>
       - String</i>
-    <a href="#awsregion" title="AwsRegion">AwsRegion</a>: <i>String</i>
-    <a href="#scannergroup" title="ScannerGroup">ScannerGroup</a>: <i>String</i>
-    <a href="#testconnectiontimeoutinseconds" title="TestConnectionTimeoutInSeconds">TestConnectionTimeoutInSeconds</a>: <i>Double</i>
-    <a href="#customfields" title="CustomFields">CustomFields</a>: <i>
+<a href="#awsregion" title="AwsRegion">AwsRegion</a>: <i>String</i>
+<a href="#scannergroup" title="ScannerGroup">ScannerGroup</a>: <i>String</i>
+<a href="#testconnectiontimeoutinseconds" title="TestConnectionTimeoutInSeconds">TestConnectionTimeoutInSeconds</a>: <i>Double</i>
+<a href="#customfields" title="CustomFields">CustomFields</a>: <i>
       - <a href="customfield.md">CustomField</a></i>
-    <a href="#businessowners" title="BusinessOwners">BusinessOwners</a>: <i>
+<a href="#businessowners" title="BusinessOwners">BusinessOwners</a>: <i>
       - <a href="user.md">User</a></i>
-    <a href="#itowners" title="ItOwners">ItOwners</a>: <i>
+<a href="#itowners" title="ItOwners">ItOwners</a>: <i>
       - <a href="user.md">User</a></i>
-    <a href="#location" title="Location">Location</a>: <i>String</i>
-    <a href="#scope" title="Scope">Scope</a>: <i>String</i>
-    <a href="#securitytier" title="SecurityTier">SecurityTier</a>: <i>String</i>
-    <a href="#comments" title="Comments">Comments</a>: <i>String</i>
-    <a href="#scantimeoutinseconds" title="ScanTimeoutInSeconds">ScanTimeoutInSeconds</a>: <i>Double</i>
-    <a href="#numberofparsingthreads" title="NumberOfParsingThreads">NumberOfParsingThreads</a>: <i>String</i>
-    <a href="#enablestructuredclustering" title="EnableStructuredClustering">EnableStructuredClustering</a>: <i>Boolean</i>
-    <a href="#enableclassifiers" title="EnableClassifiers">EnableClassifiers</a>: <i>Boolean</i>
-    <a href="#samplescanonly" title="SampleScanOnly">SampleScanOnly</a>: <i>Boolean</i>
-    <a href="#enableadvanceclassifiers" title="EnableAdvanceClassifiers">EnableAdvanceClassifiers</a>: <i>Boolean</i>
-    <a href="#rdbsampledatamaxsize" title="RdbSampleDataMaxSize">RdbSampleDataMaxSize</a>: <i>String</i>
-    <a href="#scanwindowname" title="ScanWindowName">ScanWindowName</a>: <i>String</i>
-    <a href="#iscorrelationsetsupported" title="IsCorrelationSetSupported">IsCorrelationSetSupported</a>: <i>Boolean</i>
+<a href="#location" title="Location">Location</a>: <i>String</i>
+<a href="#scope" title="Scope">Scope</a>: <i>String</i>
+<a href="#securitytier" title="SecurityTier">SecurityTier</a>: <i>String</i>
+<a href="#comments" title="Comments">Comments</a>: <i>String</i>
+<a href="#scantimeoutinseconds" title="ScanTimeoutInSeconds">ScanTimeoutInSeconds</a>: <i>Double</i>
+<a href="#numberofparsingthreads" title="NumberOfParsingThreads">NumberOfParsingThreads</a>: <i>String</i>
+<a href="#enablestructuredclustering" title="EnableStructuredClustering">EnableStructuredClustering</a>: <i>Boolean</i>
+<a href="#enableclassifiers" title="EnableClassifiers">EnableClassifiers</a>: <i>Boolean</i>
+<a href="#samplescanonly" title="SampleScanOnly">SampleScanOnly</a>: <i>Boolean</i>
+<a href="#enableadvanceclassifiers" title="EnableAdvanceClassifiers">EnableAdvanceClassifiers</a>: <i>Boolean</i>
+<a href="#rdbsampledatamaxsize" title="RdbSampleDataMaxSize">RdbSampleDataMaxSize</a>: <i>String</i>
+<a href="#scanwindowname" title="ScanWindowName">ScanWindowName</a>: <i>String</i>
+<a href="#iscorrelationsetsupported" title="IsCorrelationSetSupported">IsCorrelationSetSupported</a>: <i>Boolean</i>
 </pre>
 
 ## Properties
+
+#### Id
+
+Connection Id
+
+_Required_: No
+
+_Type_: String
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### Name
 
 Type data source name.
 
-_Required_: Yes
+_Required_: No
 
 _Type_: String
 
 _Pattern_: <code>^[\w\-\s\(\):]+$</code>
 
-_Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### Enabled
 
@@ -222,8 +227,6 @@ _Type_: Double
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### CustomFields
-
-Custom Parameters
 
 _Required_: No
 
@@ -372,20 +375,4 @@ _Required_: No
 _Type_: Boolean
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-## Return Values
-
-### Ref
-
-When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the Name.
-
-### Fn::GetAtt
-
-The `Fn::GetAtt` intrinsic function returns a value for a specified attribute of this type. The following are the available attributes and sample return values.
-
-For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::GetAtt](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-getatt.html).
-
-#### Connection
-
-Returns the <code>Connection</code> value.
 

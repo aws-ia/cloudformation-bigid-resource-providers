@@ -20,159 +20,69 @@ export class ResourceModel extends BaseModel {
         }
     )
     name?: Optional<string>;
-    @Expose({ name: 'Owners' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'owners', value, obj, [Set]),
-        {
-            toClassOnly: true,
-        }
-    )
-    owners?: Optional<Set<string>>;
-    @Expose({ name: 'Differential' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'differential', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    differential?: Optional<boolean>;
-    @Expose({ name: 'NumberOfParsingThreads' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'numberOfParsingThreads', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    numberOfParsingThreads?: Optional<string>;
-    @Expose({ name: 'RdbIsSampleData' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'rdbIsSampleData', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    rdbIsSampleData?: Optional<boolean>;
-    @Expose({ name: 'IncludeFileTypes' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'includeFileTypes', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    includeFileTypes?: Optional<boolean>;
-    @Expose({ name: 'Password' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'password', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    password?: Optional<string>;
-    @Expose({ name: 'MetadataAclScanEnabled' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'metadataAclScanEnabled', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    metadataAclScanEnabled?: Optional<string>;
-    @Expose({ name: 'DsAclScanEnabled' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'dsAclScanEnabled', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    dsAclScanEnabled?: Optional<string>;
-    @Expose({ name: 'IsStsAuth' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'isStsAuth', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    isStsAuth?: Optional<boolean>;
-    @Expose({ name: 'IsCrossaccountAuth' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'isCrossaccountAuth', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    isCrossaccountAuth?: Optional<boolean>;
-    @Expose({ name: 'IsIamroleAuth' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'isIamroleAuth', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    isIamroleAuth?: Optional<boolean>;
-    @Expose({ name: 'IsAnonymousAuth' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'isAnonymousAuth', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    isAnonymousAuth?: Optional<boolean>;
-    @Expose({ name: 'IsCredentialsAuth' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'isCredentialsAuth', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    isCredentialsAuth?: Optional<boolean>;
-    @Expose({ name: 'SecurityTier' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'securityTier', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    securityTier?: Optional<string>;
-    @Expose({ name: 'OcrLanguages' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'ocrLanguages', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    ocrLanguages?: Optional<string>;
-    @Expose({ name: 'ScannerStrategy' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'scannerStrategy', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    scannerStrategy?: Optional<string>;
     @Expose({ name: 'Enabled' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'enabled', value, obj, []),
+            transformValue(Boolean, 'enabled', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    enabled?: Optional<string>;
+    enabled?: Optional<boolean>;
+    @Expose({ name: 'FriendlyName' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'friendlyName', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    friendlyName?: Optional<string>;
+    @Expose({ name: 'Description' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'description', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    description?: Optional<string>;
+    @Expose({ name: 'AuthenticationMethod' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'authenticationMethod', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    authenticationMethod?: Optional<string>;
+    @Expose({ name: 'AwsAccessKey' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'awsAccessKey', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    awsAccessKey?: Optional<string>;
+    @Expose({ name: 'AwsSecretKey' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'awsSecretKey', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    awsSecretKey?: Optional<string>;
+    @Expose({ name: 'AwsSessionToken' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'awsSessionToken', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    awsSessionToken?: Optional<string>;
     @Expose({ name: 'CredentialId' })
     @Transform(
         (value: any, obj: any) =>
@@ -182,36 +92,171 @@ export class ResourceModel extends BaseModel {
         }
     )
     credentialId?: Optional<string>;
-    @Expose({ name: 'CertificateId' })
+    @Expose({ name: 'DynamodbTableNames' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'certificateId', value, obj, []),
+            transformValue(String, 'dynamodbTableNames', value, obj, [Array]),
         {
             toClassOnly: true,
         }
     )
-    certificateId?: Optional<string>;
+    dynamodbTableNames?: Optional<Array<string>>;
+    @Expose({ name: 'AwsRegion' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'awsRegion', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    awsRegion?: Optional<string>;
+    @Expose({ name: 'ScannerGroup' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'scannerGroup', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    scannerGroup?: Optional<string>;
+    @Expose({ name: 'TestConnectionTimeoutInSeconds' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Number, 'testConnectionTimeoutInSeconds', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    testConnectionTimeoutInSeconds?: Optional<number>;
     @Expose({ name: 'CustomFields' })
+    @Type(() => CustomField)
+    customFields?: Optional<Array<CustomField>>;
+    @Expose({ name: 'BusinessOwners' })
+    @Type(() => User)
+    businessOwners?: Optional<Array<User>>;
+    @Expose({ name: 'ItOwners' })
+    @Type(() => User)
+    itOwners?: Optional<Array<User>>;
+    @Expose({ name: 'Location' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(Object, 'customFields', value, obj, [Set, Map]),
+            transformValue(String, 'location', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    customFields?: Optional<Set<Map<string, object>>>;
-    @Expose({ name: 'Id' })
+    location?: Optional<string>;
+    @Expose({ name: 'Scope' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'id', value, obj, []),
+            transformValue(String, 'scope', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    id?: Optional<string>;
-    @Expose({ name: 'ConnectionResponse' })
-    @Type(() => ConnectionResponse)
-    connectionResponse?: Optional<ConnectionResponse>;
+    scope?: Optional<string>;
+    @Expose({ name: 'SecurityTier' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'securityTier', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    securityTier?: Optional<string>;
+    @Expose({ name: 'Comments' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'comments', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    comments?: Optional<string>;
+    @Expose({ name: 'ScanTimeoutInSeconds' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Number, 'scanTimeoutInSeconds', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    scanTimeoutInSeconds?: Optional<number>;
+    @Expose({ name: 'NumberOfParsingThreads' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'numberOfParsingThreads', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    numberOfParsingThreads?: Optional<string>;
+    @Expose({ name: 'EnableStructuredClustering' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Boolean, 'enableStructuredClustering', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    enableStructuredClustering?: Optional<boolean>;
+    @Expose({ name: 'EnableClassifiers' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Boolean, 'enableClassifiers', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    enableClassifiers?: Optional<boolean>;
+    @Expose({ name: 'SampleScanOnly' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Boolean, 'sampleScanOnly', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    sampleScanOnly?: Optional<boolean>;
+    @Expose({ name: 'EnableAdvanceClassifiers' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Boolean, 'enableAdvanceClassifiers', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    enableAdvanceClassifiers?: Optional<boolean>;
+    @Expose({ name: 'RdbSampleDataMaxSize' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'rdbSampleDataMaxSize', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    rdbSampleDataMaxSize?: Optional<string>;
+    @Expose({ name: 'ScanWindowName' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'scanWindowName', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    scanWindowName?: Optional<string>;
+    @Expose({ name: 'IsCorrelationSetSupported' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Boolean, 'isCorrelationSetSupported', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    isCorrelationSetSupported?: Optional<boolean>;
+    @Expose({ name: 'Connection' })
+    @Type(() => Connection)
+    connection?: Optional<Connection>;
 
     @Exclude()
     public getPrimaryIdentifier(): Dict {
@@ -232,8 +277,8 @@ export class ResourceModel extends BaseModel {
     }
 }
 
-export class ConnectionResponse extends BaseModel {
-    ['constructor']: typeof ConnectionResponse;
+export class CustomField extends BaseModel {
+    ['constructor']: typeof CustomField;
 
 
     @Expose({ name: 'Name' })
@@ -245,186 +290,31 @@ export class ConnectionResponse extends BaseModel {
         }
     )
     name?: Optional<string>;
-    @Expose({ name: 'Owners' })
+    @Expose({ name: 'Value' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'owners', value, obj, [Set]),
+            transformValue(String, 'value_', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    owners?: Optional<Set<string>>;
-    @Expose({ name: 'Differential' })
+    value_?: Optional<string>;
+    @Expose({ name: 'Type' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(Boolean, 'differential', value, obj, []),
+            transformValue(String, 'type_', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    differential?: Optional<boolean>;
-    @Expose({ name: 'NumberOfParsingThreads' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'numberOfParsingThreads', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    numberOfParsingThreads?: Optional<string>;
-    @Expose({ name: 'RdbIsSampleData' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'rdbIsSampleData', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    rdbIsSampleData?: Optional<boolean>;
-    @Expose({ name: 'IncludeFileTypes' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'includeFileTypes', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    includeFileTypes?: Optional<boolean>;
-    @Expose({ name: 'Password' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'password', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    password?: Optional<string>;
-    @Expose({ name: 'MetadataAclScanEnabled' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'metadataAclScanEnabled', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    metadataAclScanEnabled?: Optional<string>;
-    @Expose({ name: 'DsAclScanEnabled' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'dsAclScanEnabled', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    dsAclScanEnabled?: Optional<string>;
-    @Expose({ name: 'IsStsAuth' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'isStsAuth', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    isStsAuth?: Optional<boolean>;
-    @Expose({ name: 'IsCrossaccountAuth' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'isCrossaccountAuth', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    isCrossaccountAuth?: Optional<boolean>;
-    @Expose({ name: 'IsIamroleAuth' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'isIamroleAuth', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    isIamroleAuth?: Optional<boolean>;
-    @Expose({ name: 'IsAnonymousAuth' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'isAnonymousAuth', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    isAnonymousAuth?: Optional<boolean>;
-    @Expose({ name: 'IsCredentialsAuth' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Boolean, 'isCredentialsAuth', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    isCredentialsAuth?: Optional<boolean>;
-    @Expose({ name: 'SecurityTier' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'securityTier', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    securityTier?: Optional<string>;
-    @Expose({ name: 'OcrLanguages' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'ocrLanguages', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    ocrLanguages?: Optional<string>;
-    @Expose({ name: 'ScannerStrategy' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'scannerStrategy', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    scannerStrategy?: Optional<string>;
-    @Expose({ name: 'Enabled' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'enabled', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    enabled?: Optional<string>;
-    @Expose({ name: 'CredentialId' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'credentialId', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    credentialId?: Optional<string>;
-    @Expose({ name: 'CertificateId' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'certificateId', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    certificateId?: Optional<string>;
-    @Expose({ name: 'CustomFields' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Object, 'customFields', value, obj, [Set, Map]),
-        {
-            toClassOnly: true,
-        }
-    )
-    customFields?: Optional<Set<Map<string, object>>>;
+    type_?: Optional<string>;
+
+}
+
+export class User extends BaseModel {
+    ['constructor']: typeof User;
+
+
     @Expose({ name: 'Id' })
     @Transform(
         (value: any, obj: any) =>
@@ -434,9 +324,283 @@ export class ConnectionResponse extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'ConnectionResponse' })
-    @Type(() => ConnectionResponse)
-    connectionResponse?: Optional<ConnectionResponse>;
+    @Expose({ name: 'Origin' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'origin', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    origin?: Optional<string>;
+    @Expose({ name: 'Email' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'email', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    email?: Optional<string>;
+
+}
+
+export class Connection extends BaseModel {
+    ['constructor']: typeof Connection;
+
+
+    @Expose({ name: 'Id' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'id', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    id?: Optional<string>;
+    @Expose({ name: 'Name' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'name', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    name?: Optional<string>;
+    @Expose({ name: 'Enabled' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Boolean, 'enabled', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    enabled?: Optional<boolean>;
+    @Expose({ name: 'FriendlyName' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'friendlyName', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    friendlyName?: Optional<string>;
+    @Expose({ name: 'Description' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'description', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    description?: Optional<string>;
+    @Expose({ name: 'AuthenticationMethod' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'authenticationMethod', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    authenticationMethod?: Optional<string>;
+    @Expose({ name: 'AwsAccessKey' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'awsAccessKey', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    awsAccessKey?: Optional<string>;
+    @Expose({ name: 'AwsSecretKey' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'awsSecretKey', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    awsSecretKey?: Optional<string>;
+    @Expose({ name: 'AwsSessionToken' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'awsSessionToken', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    awsSessionToken?: Optional<string>;
+    @Expose({ name: 'CredentialId' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'credentialId', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    credentialId?: Optional<string>;
+    @Expose({ name: 'DynamodbTableNames' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'dynamodbTableNames', value, obj, [Array]),
+        {
+            toClassOnly: true,
+        }
+    )
+    dynamodbTableNames?: Optional<Array<string>>;
+    @Expose({ name: 'AwsRegion' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'awsRegion', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    awsRegion?: Optional<string>;
+    @Expose({ name: 'ScannerGroup' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'scannerGroup', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    scannerGroup?: Optional<string>;
+    @Expose({ name: 'TestConnectionTimeoutInSeconds' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Number, 'testConnectionTimeoutInSeconds', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    testConnectionTimeoutInSeconds?: Optional<number>;
+    @Expose({ name: 'CustomFields' })
+    @Type(() => CustomField)
+    customFields?: Optional<Array<CustomField>>;
+    @Expose({ name: 'BusinessOwners' })
+    @Type(() => User)
+    businessOwners?: Optional<Array<User>>;
+    @Expose({ name: 'ItOwners' })
+    @Type(() => User)
+    itOwners?: Optional<Array<User>>;
+    @Expose({ name: 'Location' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'location', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    location?: Optional<string>;
+    @Expose({ name: 'Scope' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'scope', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    scope?: Optional<string>;
+    @Expose({ name: 'SecurityTier' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'securityTier', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    securityTier?: Optional<string>;
+    @Expose({ name: 'Comments' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'comments', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    comments?: Optional<string>;
+    @Expose({ name: 'ScanTimeoutInSeconds' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Number, 'scanTimeoutInSeconds', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    scanTimeoutInSeconds?: Optional<number>;
+    @Expose({ name: 'NumberOfParsingThreads' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'numberOfParsingThreads', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    numberOfParsingThreads?: Optional<string>;
+    @Expose({ name: 'EnableStructuredClustering' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Boolean, 'enableStructuredClustering', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    enableStructuredClustering?: Optional<boolean>;
+    @Expose({ name: 'EnableClassifiers' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Boolean, 'enableClassifiers', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    enableClassifiers?: Optional<boolean>;
+    @Expose({ name: 'SampleScanOnly' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Boolean, 'sampleScanOnly', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    sampleScanOnly?: Optional<boolean>;
+    @Expose({ name: 'EnableAdvanceClassifiers' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Boolean, 'enableAdvanceClassifiers', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    enableAdvanceClassifiers?: Optional<boolean>;
+    @Expose({ name: 'RdbSampleDataMaxSize' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'rdbSampleDataMaxSize', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    rdbSampleDataMaxSize?: Optional<string>;
+    @Expose({ name: 'ScanWindowName' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'scanWindowName', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    scanWindowName?: Optional<string>;
+    @Expose({ name: 'IsCorrelationSetSupported' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Boolean, 'isCorrelationSetSupported', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    isCorrelationSetSupported?: Optional<boolean>;
 
 }
 
