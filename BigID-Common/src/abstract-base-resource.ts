@@ -17,7 +17,7 @@ export interface RetryableCallbackContext {
     retry?: number
 }
 
-export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, GetResponseData, CreateResponseData, UpdateResponseData, ErrorType extends Error, TypeConfigurationM> extends BaseResource<ResourceModelType> {
+export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, GetResponseData, CreateResponseData, UpdateResponseData, ErrorType extends Error, TypeConfigurationType> extends BaseResource<ResourceModelType> {
 
     private maxRetries = 5;
 
@@ -28,7 +28,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
      * @param model Current model coming from CloudFormation. This contains the input given by the user as well as any
      * output already set by previous handler which returned an IN_PROGRESS event.
      */
-    abstract get(model: ResourceModelType, typeConfiguration: TypeConfigurationM): Promise<GetResponseData>;
+    abstract get(model: ResourceModelType, typeConfiguration: TypeConfigurationType): Promise<GetResponseData>;
 
     /**
      * This method is invoked to list all possible resources from a vendor API, of the current resource type.
@@ -36,7 +36,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
      * @param model Current model coming from CloudFormation. This contains the input given by the user as well as any
      * output already set by previous handler which returned an IN_PROGRESS event.
      */
-    abstract list(model: ResourceModelType, typeConfiguration: TypeConfigurationM): Promise<ResourceModelType[]>;
+    abstract list(model: ResourceModelType, typeConfiguration: TypeConfigurationType): Promise<ResourceModelType[]>;
 
     /**
      * This method is invoked to create a resource from a vendor API, that should correspond to the given the CloudFormation model input.
@@ -45,7 +45,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
      * output already set by previous handler which returned an IN_PROGRESS event.
      * @param typeConfiguration
      */
-    abstract create(model: ResourceModelType, typeConfiguration: TypeConfigurationM): Promise<CreateResponseData>;
+    abstract create(model: ResourceModelType, typeConfiguration: TypeConfigurationType): Promise<CreateResponseData>;
 
     /**
      * This method is invoked to update a resource from a vendor API, that should correspond to the given the CloudFormation model input.
@@ -53,7 +53,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
      * @param model Current model coming from CloudFormation. This contains the input given by the user as well as any
      * output already set by previous handler which returned an IN_PROGRESS event.
      */
-    abstract update(model: ResourceModelType, typeConfiguration: TypeConfigurationM): Promise<UpdateResponseData>;
+    abstract update(model: ResourceModelType, typeConfiguration: TypeConfigurationType): Promise<UpdateResponseData>;
 
     /**
      * This method is invoked to delete a resource from a vendor API, that should correspond to the given the CloudFormation model input.
@@ -61,7 +61,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
      * @param model Current model coming from CloudFormation. This contains the input given by the user as well as any
      * output already set by previous handler which returned an IN_PROGRESS event.
      */
-    abstract delete(model: ResourceModelType, typeConfiguration: TypeConfigurationM): Promise<void>;
+    abstract delete(model: ResourceModelType, typeConfiguration: TypeConfigurationType): Promise<void>;
 
     /**
      * This method is invoked to instantiate a new resource model
@@ -106,7 +106,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModelType>,
         callbackContext: RetryableCallbackContext,
-        typeConfiguration: TypeConfigurationM,
+        typeConfiguration: TypeConfigurationType,
         logger: LoggerProxy
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         let model = this.newModel(request.desiredResourceState);
@@ -167,7 +167,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModelType>,
         callbackContext: RetryableCallbackContext,
-        typeConfiguration: TypeConfigurationM,
+        typeConfiguration: TypeConfigurationType,
         logger: LoggerProxy
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         let model = this.newModel(request.desiredResourceState);
@@ -205,7 +205,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModelType>,
         callbackContext: RetryableCallbackContext,
-        typeConfiguration: TypeConfigurationM,
+        typeConfiguration: TypeConfigurationType,
         logger: LoggerProxy
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         let model = this.newModel(request.desiredResourceState);
@@ -264,7 +264,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModelType>,
         callbackContext: RetryableCallbackContext,
-        typeConfiguration: TypeConfigurationM,
+        typeConfiguration: TypeConfigurationType,
         logger: LoggerProxy
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         let model = this.newModel(request.desiredResourceState);
@@ -296,7 +296,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModelType>,
         callbackContext: RetryableCallbackContext,
-        typeConfiguration: TypeConfigurationM,
+        typeConfiguration: TypeConfigurationType,
         logger: LoggerProxy
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         const model = this.newModel(request.desiredResourceState);
@@ -314,7 +314,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         }
     }
 
-    private async assertExists(model: ResourceModelType, typeConfiguration: TypeConfigurationM) {
+    private async assertExists(model: ResourceModelType, typeConfiguration: TypeConfigurationType) {
         try {
             await this.get(model, typeConfiguration);
         } catch (e) {
