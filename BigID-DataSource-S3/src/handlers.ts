@@ -1,23 +1,13 @@
 import {Connection, CustomField, ResourceModel, TypeConfigurationModel, User} from './models';
-import {AbstractBigIdDatasourceResource} from "../../BigID-Common/src/abstract-bigid-datasource-resource"
-import {BigIdClient} from "../../BigID-Common/src/bigid-client"
-
-type StringBoolean = 'true' | 'false'
-
-type SecurityTierPayload = '1' | '2' | '3' | '4' | '5'
-
-type CustomFieldPayload = {
-    field_name: string;
-    field_value: string;
-    field_type: string;
-}
-
-type UserPayload = {
-    id: string
-    origin: string
-    email: string | null
-    type: 'business' | 'it'
-}
+import {AbstractBigIdDatasourceResource} from "../../BigID-Common/src/abstract-bigid-datasource-resource";
+import {BigIdClient} from "../../BigID-Common/src/bigid-client";
+import {
+    AwsRegionToLocation,
+    CustomFieldPayload,
+    SecurityTierPayload,
+    StringBoolean,
+    UserPayload
+} from "../../BigID-Common/src/types";
 
 type ConnectionPayload = {
     id?: string
@@ -164,6 +154,13 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
             })));
         }
 
+        let location = model.location;
+        if (!location) {
+            location = AwsRegionToLocation.hasOwnProperty(model.awsRegion)
+                ? AwsRegionToLocation[model.awsRegion as keyof typeof AwsRegionToLocation]
+                : null;
+        }
+
         return {
             type: 's3',
             parquetFileRegex: model.parquetFileRegex || null,
@@ -191,7 +188,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
             })) : [],
             owners: model.owners ? Array.of(...model.owners) : [],
             owners_v2: ownersV2,
-            location: model.location || null,
+            location: location,
             scope: model.scope || null,
             security_tier: (model.securityTier || '1') as SecurityTierPayload,
             comment: model.comments || null,

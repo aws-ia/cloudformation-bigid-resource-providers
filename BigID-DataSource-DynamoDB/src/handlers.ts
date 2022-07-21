@@ -1,21 +1,7 @@
 import {Connection, CustomField, ResourceModel, TypeConfigurationModel, User} from './models';
 import {AbstractBigIdDatasourceResource} from "../../BigID-Common/src/abstract-bigid-datasource-resource"
 import {BigIdClient} from "../../BigID-Common/src/bigid-client"
-
-type SecurityTierPayload = '1' | '2' | '3' | '4' | '5'
-
-type CustomFieldPayload = {
-    field_name: string;
-    field_value: string;
-    field_type: string;
-}
-
-type UserPayload = {
-    id: string
-    origin: string
-    email: string | null
-    type: 'business' | 'it'
-}
+import {AwsRegionToLocation, CustomFieldPayload, SecurityTierPayload, UserPayload} from "../../BigID-Common/src/types";
 
 type ConnectionPayload = {
     id?: string
@@ -147,6 +133,13 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
             })));
         }
 
+        let location = model.location;
+        if (!location) {
+            location = AwsRegionToLocation.hasOwnProperty(model.awsRegion)
+                ? AwsRegionToLocation[model.awsRegion as keyof typeof AwsRegionToLocation]
+                : null;
+        }
+
         return {
             type: 'dynamodb',
             name: model.name || null,
@@ -162,7 +155,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
             credential_id: model.credentialId || null,
             aws_region: model.awsRegion || null,
             dynamodbTableNames: Array.isArray(model.dynamodbTableNames)
-                ?  model.dynamodbTableNames.join(',')
+                ? model.dynamodbTableNames.join(',')
                 : null,
             scanner_group: model.scannerGroup || null,
             testConnectionTimeoutInSeconds: model.testConnectionTimeoutInSeconds,
@@ -172,7 +165,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
                 field_type: customField.type_
             })) : [],
             owners_v2: ownersV2,
-            location: model.location || null,
+            location: location,
             scope: model.scope || null,
             security_tier: (model.securityTier || '1') as SecurityTierPayload,
             comment: model.comments || null,
