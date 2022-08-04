@@ -1,0 +1,53 @@
+{
+  "CREATE": {
+    "/ParquetFileRegex": "",
+    "/Name": "ThomasTestContract",
+    "/Owners": [],
+    "/AwsAuthenticationType": "isCredentialsAuth",
+    "/AwsAccessKey": "AHDSHJD%$87874",
+    "/AwsSecretKey": "QV4qXUr/DKDJSH*(&*DLKJL3489sLK",
+    "/AwsRoleSessionName": null,
+    "/AwsRoleArn": null,
+    "/AwsSessionToken": null,
+    "/AwsRegion": "eu-west-2",
+    "/FileTypesToExclude": null,
+    "/FolderToScan": "/",
+    "/ScannerGroup": "default",
+    "/CustomFields": [],
+    "/BusinessOwners": [],
+    "/ItOwners": [],
+    "/Location": "France",
+    "/Scope": null,
+    "/SecurityTier": "1"
+  },
+  "UPDATE": {
+    "/ParquetFileRegex": "",
+    "/Owners": [
+      "person@acme.com"
+    ],
+    "/AwsAuthenticationType": "isCredentialsAuth",
+    "/AwsAccessKey": "AHDSHJD%$87874",
+    "/AwsSecretKey": "QV4qXUr/DKDJSH*(&*DLKJL3489sLK",
+    "/AwsRoleSessionName": null,
+    "/AwsRoleArn": null,
+    "/AwsSessionToken": null,
+    "/AwsRegion": "eu-west-1",
+    "/FileTypesToExclude": "png,gif,jpg",
+    "/FolderToScan": "/path/to/folder",
+    "/ScannerGroup": "default",
+    "/CustomFields": [{
+      "Name": "Username",
+      "Value": "Foo",
+      "Type": "clear"
+    }, {
+      "Name": "Password",
+      "Value": "Bar",
+      "Type": "encrypted"
+    }],
+    "/BusinessOwners": [],
+    "/ItOwners": [],
+    "/Location": "United Kingdom",
+    "/Scope": null,
+    "/SecurityTier": "3"
+  }
+}
