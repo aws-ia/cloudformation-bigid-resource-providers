@@ -8,6 +8,7 @@ import {
     StringBoolean,
     UserPayload
 } from "../../BigID-Common/src/types";
+import {version} from "../package.json";
 
 type ConnectionPayload = {
     id?: string
@@ -69,8 +70,10 @@ type ConnectionResponses = {
 
 class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection, Connection, Connection, TypeConfigurationModel> {
 
+    private userAgent = `AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation resource ${this.typeName}/${version}`;
+
     async get(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
-        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest<ConnectionResponse>(
+        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password, this.userAgent).doRequest<ConnectionResponse>(
             'get',
             `/api/v1/ds_connections/${model.name}`
         );
@@ -79,7 +82,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
     }
 
     async list(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<ResourceModel[]> {
-        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest<ConnectionResponses>(
+        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password, this.userAgent).doRequest<ConnectionResponses>(
             'get',
             '/api/v1/ds_connections'
         );
@@ -91,7 +94,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
     }
 
     async create(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
-        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest<ConnectionPayload>(
+        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password, this.userAgent).doRequest<ConnectionPayload>(
             'post',
             `/api/v1/ds_connections`,
             undefined,
@@ -104,7 +107,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
     }
 
     async update(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
-        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest<ConnectionPayload>(
+        const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password, this.userAgent).doRequest<ConnectionPayload>(
             'put',
             `/api/v1/ds_connections/${model.name}`,
             undefined,
@@ -117,7 +120,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
     }
 
     async delete(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<void> {
-        await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password).doRequest(
+        await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password, this.userAgent).doRequest(
             'delete',
             `/api/v1/ds_connections/${model.name}`
         );
@@ -297,7 +300,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
     }
 }
 
-export const resource = new Resource(ResourceModel.TYPE_NAME, ResourceModel, TypeConfigurationModel);
+export const resource = new Resource(ResourceModel.TYPE_NAME, ResourceModel, null, null, TypeConfigurationModel);
 
 // Entrypoint for production usage after registered in CloudFormation
 export const entrypoint = resource.entrypoint;

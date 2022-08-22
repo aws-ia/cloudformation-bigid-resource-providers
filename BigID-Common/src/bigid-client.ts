@@ -20,11 +20,13 @@ export class BigIdClient {
     private readonly baseUrl: string;
     private readonly username: string;
     private readonly password: string;
+    private readonly userAgent: string;
 
-    constructor(baseUrl: string, username: string, password: string) {
+    constructor(baseUrl: string, username: string, password: string, userAgent?: string) {
         this.baseUrl = baseUrl;
         this.username = username;
         this.password = password;
+        this.userAgent = userAgent;
     }
 
     public async doRequest<ResponseType>(method: 'get' | 'put' | 'post' | 'delete', path: string, params: any = {}, body?: {}): Promise<AxiosResponse<ResponseType>> {
@@ -36,6 +38,7 @@ export class BigIdClient {
             method: method,
             data: body,
             headers: {
+                'User-Agent': this.userAgent || "AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation custom resource",
                 'Authorization': token,
                 'Content-type': 'application/json'
             }
@@ -70,6 +73,7 @@ export class BigIdClient {
             },
             {
                 headers: {
+                    'User-Agent': this.userAgent || "AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation custom resource",
                     'Content-Type': 'application/json'
                 }
             });
