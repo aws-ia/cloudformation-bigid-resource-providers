@@ -106,8 +106,8 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModelType>,
         callbackContext: RetryableCallbackContext,
-        typeConfiguration: TypeConfigurationType,
-        logger: LoggerProxy
+        logger: LoggerProxy,
+        typeConfiguration: TypeConfigurationType
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         let model = this.newModel(request.desiredResourceState);
 
@@ -167,8 +167,8 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModelType>,
         callbackContext: RetryableCallbackContext,
-        typeConfiguration: TypeConfigurationType,
-        logger: LoggerProxy
+        logger: LoggerProxy,
+        typeConfiguration: TypeConfigurationType
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         let model = this.newModel(request.desiredResourceState);
 
@@ -205,8 +205,8 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModelType>,
         callbackContext: RetryableCallbackContext,
-        typeConfiguration: TypeConfigurationType,
-        logger: LoggerProxy
+        logger: LoggerProxy,
+        typeConfiguration: TypeConfigurationType
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         let model = this.newModel(request.desiredResourceState);
 
@@ -264,8 +264,8 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModelType>,
         callbackContext: RetryableCallbackContext,
-        typeConfiguration: TypeConfigurationType,
-        logger: LoggerProxy
+        logger: LoggerProxy,
+        typeConfiguration: TypeConfigurationType
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         let model = this.newModel(request.desiredResourceState);
 
@@ -296,8 +296,8 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModelType>,
         callbackContext: RetryableCallbackContext,
-        typeConfiguration: TypeConfigurationType,
-        logger: LoggerProxy
+        logger: LoggerProxy,
+        typeConfiguration: TypeConfigurationType
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         const model = this.newModel(request.desiredResourceState);
 

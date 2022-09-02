@@ -1,4 +1,4 @@
-import {Connection, CustomField, ResourceModel, TypeConfigurationModel, User} from './models';
+import {CustomField, ResourceModel, TypeConfigurationModel, User} from './models';
 import {AbstractBigIdDatasourceResource} from "../../BigID-Common/src/abstract-bigid-datasource-resource"
 import {BigIdClient} from "../../BigID-Common/src/bigid-client"
 import {AwsRegionToLocation, CustomFieldPayload, SecurityTierPayload, UserPayload} from "../../BigID-Common/src/types";
@@ -47,11 +47,11 @@ type ConnectionResponses = {
     ds_connections: ConnectionPayload[]
 }
 
-class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection, Connection, Connection, TypeConfigurationModel> {
+class Resource extends AbstractBigIdDatasourceResource<ResourceModel, ResourceModel, ResourceModel, ResourceModel, TypeConfigurationModel> {
 
     private userAgent = `AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation resource ${this.typeName}/${version}`;
 
-    async get(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
+    async get(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<ResourceModel> {
         const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password, this.userAgent).doRequest<ConnectionResponse>(
             'get',
             `/api/v1/ds_connections/${model.name}`
@@ -67,12 +67,11 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
         );
 
         return response.data.ds_connections.map(connectionPayload => new ResourceModel({
-            name: connectionPayload.name,
-            connection: this.connectionPayloadToConnection(connectionPayload)
+            ...this.connectionPayloadToConnection(connectionPayload)
         }));
     }
 
-    async create(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
+    async create(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<ResourceModel> {
         const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password, this.userAgent).doRequest<ConnectionPayload>(
             'post',
             `/api/v1/ds_connections`,
@@ -85,7 +84,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
         return this.connectionPayloadToConnection(response.data);
     }
 
-    async update(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<Connection> {
+    async update(model: ResourceModel, typeConfiguration: TypeConfigurationModel): Promise<ResourceModel> {
         const response = await new BigIdClient(typeConfiguration.bigIdAccess.domain, typeConfiguration.bigIdAccess.username, typeConfiguration.bigIdAccess.password, this.userAgent).doRequest<ConnectionPayload>(
             'put',
             `/api/v1/ds_connections/${model.name}`,
@@ -109,18 +108,23 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
         return new ResourceModel(partial);
     }
 
-    setModelFrom(model: ResourceModel, from?: Connection): ResourceModel {
+    setModelFrom(model: ResourceModel, from?: ResourceModel): ResourceModel {
         if (!from) {
             return model;
         }
-        model.connection = from;
-        return model;
+        let resourceModel = new ResourceModel({
+            ...model,
+            ...from
+        });
+        delete resourceModel.awsSecretKey;
+        delete resourceModel.customFields;
+        return resourceModel;
     }
 
     private modelToConnectionPayload(model: ResourceModel): ConnectionPayload {
-        const ownersV2: UserPayload[] = [];
+        let ownersV2: UserPayload[] = [];
         if (model.businessOwners) {
-            ownersV2.concat(Array.of(...model.businessOwners || []).map(businessOwner => ({
+            ownersV2 = ownersV2.concat(Array.of(...model.businessOwners || []).map(businessOwner => ({
                 id: businessOwner.id,
                 origin: businessOwner.origin,
                 email: businessOwner.email,
@@ -128,7 +132,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
             })));
         }
         if (model.itOwners) {
-            ownersV2.concat(Array.of(...model.itOwners || []).map(itOwners => ({
+            ownersV2 = ownersV2.concat(Array.of(...model.itOwners || []).map(itOwners => ({
                 id: itOwners.id,
                 origin: itOwners.origin,
                 email: itOwners.email,
@@ -143,7 +147,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
                 : null;
         }
 
-        return {
+        return <ConnectionPayload>{
             type: 'dynamodb',
             name: model.name || null,
             enabled: model.enabled === true ? 'yes' : 'no',
@@ -184,7 +188,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
         };
     }
 
-    private connectionPayloadToConnection(payload: ConnectionPayload): Connection {
+    private connectionPayloadToConnection(payload: ConnectionPayload): ResourceModel {
         let authenticationMethod = 'Default'
         if (payload.isIamRoleAuth) {
             authenticationMethod = 'IAMRole'
@@ -193,7 +197,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
             authenticationMethod = 'BigID'
         }
 
-        return new Connection({
+        return new ResourceModel({
             id: payload.id,
             type: payload.type,
             name: payload.name,
@@ -206,7 +210,7 @@ class Resource extends AbstractBigIdDatasourceResource<ResourceModel, Connection
             awsSessionToken: payload.aws_session_token,
             credentialId: payload.credential_id,
             awsRegion: payload.aws_region,
-            dynamodbTableNames: Array.isArray(payload.dynamodbTableNames) ? payload.dynamodbTableNames.split(',') : '',
+            dynamodbTableNames: Array.isArray(payload.dynamodbTableNames) ? payload.dynamodbTableNames.split(',') : [payload.dynamodbTableNames],
             scannerGroup: payload.scanner_group,
             testConnectionTimeoutInSeconds: payload.testConnectionTimeoutInSeconds,
             customFields: Array.isArray(payload.custom_fields)
