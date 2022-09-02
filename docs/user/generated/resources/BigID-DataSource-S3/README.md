@@ -16,7 +16,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#enabled" title="Enabled">Enabled</a>" : <i>Boolean</i>,
         "<a href="#friendlyname" title="FriendlyName">FriendlyName</a>" : <i>String</i>,
         "<a href="#description" title="Description">Description</a>" : <i>String</i>,
-        "<a href="#owners" title="Owners">Owners</a>" : <i>[ String, ... ]</i>,
         "<a href="#awsauthenticationtype" title="AwsAuthenticationType">AwsAuthenticationType</a>" : <i>String</i>,
         "<a href="#awsrolesessionname" title="AwsRoleSessionName">AwsRoleSessionName</a>" : <i>String</i>,
         "<a href="#awsrolearn" title="AwsRoleArn">AwsRoleArn</a>" : <i>String</i>,
@@ -53,7 +52,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#ismodifiedinxdays" title="IsModifiedInXDays">IsModifiedInXDays</a>" : <i>Boolean</i>,
         "<a href="#xlastdays" title="XLastDays">XLastDays</a>" : <i>Double</i>,
         "<a href="#scanwindowname" title="ScanWindowName">ScanWindowName</a>" : <i>String</i>,
-        "<a href="#parquetfileregex" title="ParquetFileRegex">ParquetFileRegex</a>" : <i>String</i>,
+        "<a href="#parquetfileregex" title="ParquetFileRegex">ParquetFileRegex</a>" : <i>String</i>
     }
 }
 </pre>
@@ -67,8 +66,6 @@ Properties:
     <a href="#enabled" title="Enabled">Enabled</a>: <i>Boolean</i>
     <a href="#friendlyname" title="FriendlyName">FriendlyName</a>: <i>String</i>
     <a href="#description" title="Description">Description</a>: <i>String</i>
-    <a href="#owners" title="Owners">Owners</a>: <i>
-      - String</i>
     <a href="#awsauthenticationtype" title="AwsAuthenticationType">AwsAuthenticationType</a>: <i>String</i>
     <a href="#awsrolesessionname" title="AwsRoleSessionName">AwsRoleSessionName</a>: <i>String</i>
     <a href="#awsrolearn" title="AwsRoleArn">AwsRoleArn</a>: <i>String</i>
@@ -152,16 +149,6 @@ _Required_: No
 _Type_: String
 
 _Maximum_: <code>100</code>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### Owners
-
-owners
-
-_Required_: No
-
-_Type_: List of String
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -357,6 +344,8 @@ _Required_: No
 
 _Type_: String
 
+_Minimum_: <code>1</code>
+
 _Maximum_: <code>150</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
@@ -532,14 +521,3 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 ### Ref
 
 When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the Name.
-
-### Fn::GetAtt
-
-The `Fn::GetAtt` intrinsic function returns a value for a specified attribute of this type. The following are the available attributes and sample return values.
-
-For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::GetAtt](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-getatt.html).
-
-#### Connection
-
-Returns the <code>Connection</code> value.
-

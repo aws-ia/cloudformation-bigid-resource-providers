@@ -183,7 +183,7 @@
     },
     "Comments": {
       "type": "string",
-      "minLength": 0,
+      "minLength": 1,
       "maxLength": 150
     },
     "ScanTimeoutInSeconds": {
@@ -221,102 +221,6 @@
     "IsCorrelationSetSupported": {
       "type": "boolean",
       "default": false
-    },
-    "Connection": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "$ref": "#/definitions/Id"
-        },
-        "Name": {
-          "$ref": "#/definitions/Name"
-        },
-        "Enabled": {
-          "$ref": "#/definitions/Enabled"
-        },
-        "FriendlyName": {
-          "$ref": "#/definitions/FriendlyName"
-        },
-        "Description": {
-          "$ref": "#/definitions/Description"
-        },
-        "AuthenticationMethod": {
-          "$ref": "#/definitions/AuthenticationMethod"
-        },
-        "AwsAccessKey": {
-          "$ref": "#/definitions/AwsAccessKey"
-        },
-        "AwsSecretKey": {
-          "$ref": "#/definitions/AwsSecretKey"
-        },
-        "AwsSessionToken": {
-          "$ref": "#/definitions/AwsSessionToken"
-        },
-        "CredentialId": {
-          "$ref": "#/definitions/CredentialId"
-        },
-        "DynamodbTableNames": {
-          "$ref": "#/definitions/DynamodbTableNames"
-        },
-        "AwsRegion": {
-          "$ref": "#/definitions/AwsRegion"
-        },
-        "ScannerGroup": {
-          "$ref": "#/definitions/ScannerGroup"
-        },
-        "TestConnectionTimeoutInSeconds": {
-          "$ref": "#/definitions/TestConnectionTimeoutInSeconds"
-        },
-        "CustomFields": {
-          "$ref": "#/definitions/CustomFields"
-        },
-        "BusinessOwners": {
-          "$ref": "#/definitions/BusinessOwners"
-        },
-        "ItOwners": {
-          "$ref": "#/definitions/ItOwners"
-        },
-        "Location": {
-          "$ref": "#/definitions/Location"
-        },
-        "Scope": {
-          "$ref": "#/definitions/Scope"
-        },
-        "SecurityTier": {
-          "$ref": "#/definitions/SecurityTier"
-        },
-        "Comments": {
-          "$ref": "#/definitions/Comments"
-        },
-        "ScanTimeoutInSeconds": {
-          "$ref": "#/definitions/ScanTimeoutInSeconds"
-        },
-        "NumberOfParsingThreads": {
-          "$ref": "#/definitions/NumberOfParsingThreads"
-        },
-        "EnableStructuredClustering": {
-          "$ref": "#/definitions/EnableStructuredClustering"
-        },
-        "EnableClassifiers": {
-          "$ref": "#/definitions/EnableClassifiers"
-        },
-        "SampleScanOnly": {
-          "$ref": "#/definitions/SampleScanOnly"
-        },
-        "EnableAdvanceClassifiers": {
-          "$ref": "#/definitions/EnableAdvanceClassifiers"
-        },
-        "RdbSampleDataMaxSize": {
-          "$ref": "#/definitions/RdbSampleDataMaxSize"
-        },
-        "ScanWindowName": {
-          "$ref": "#/definitions/ScanWindowName"
-        },
-        "IsCorrelationSetSupported": {
-          "$ref": "#/definitions/IsCorrelationSetSupported"
-        }
-      },
-      "additionalProperties": false
     }
   },
   "properties": {
@@ -406,9 +310,6 @@
     },
     "IsCorrelationSetSupported": {
       "$ref": "#/definitions/IsCorrelationSetSupported"
-    },
-    "Connection": {
-      "$ref": "#/definitions/Connection"
     }
   },
   "additionalProperties": false,
@@ -421,11 +322,12 @@
   "createOnlyProperties": [
     "/properties/Name"
   ],
-  "readOnlyProperties": [
-    "/properties/Connection"
-  ],
   "primaryIdentifier": [
     "/properties/Name"
+  ],
+  "writeOnlyProperties": [
+    "/properties/AwsSecretKey",
+    "/properties/CustomFields"
   ],
   "handlers": {
     "create": {

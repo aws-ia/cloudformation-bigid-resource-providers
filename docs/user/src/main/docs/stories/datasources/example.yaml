@@ -1,0 +1,70 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: |
+  The following CloudFormation allow the creation and configuration of Data sources in BigID.
+  This template currently supports only S3 data sources.
+
+Resources:
+  S3DataSource:
+    Type: BigID::DataSource::S3
+    Properties:
+      Name: TestS3DataSource
+      AwsAuthenticationType: isCredentialsAuth
+      AwsAccessKey: ASIAUNWLO4GHSCMPGFMP
+      AwsSecretKey: SECRET
+      AwsRegion: eu-west-3
+      BucketName: thomas-test-bigid
+      TestConnectionTimeoutInSeconds: 10
+      FolderToScan: /
+      Location: France
+      SecurityTier: "3"
+      FileTypesToExclude: png,gif,jpg
+      DifferentialScan: true
+      IsModifiedInXDays: true
+      XLastDays: 2
+      MetadataAclScanEnabled: true
+      DsAclScanEnabled: true
+      EnabledOcr: true
+      OcrTimeout: 120
+      OcrLanguages: fra
+      CustomFields:
+        - Name: Username
+          Value: Foo
+          Type: clear
+        - Name: Password
+          Value: BarFoo
+          Type: encrypted
+
+  DynamoDBDataSource:
+    Type: BigID::DataSource::DynamoDB
+    Properties:
+      ParquetFileRegex: '*'
+      Name: ThomasTestContract
+      AwsAuthenticationType: isCredentialsAuth
+      AwsAccessKey: AHDSHJD%$87874
+      AwsSecretKey: SECRET
+      AwsRoleSessionName: null
+      AwsRoleArn: null
+      AwsSessionToken: null
+      AwsRegion: eu-west-2
+      FileTypesToExclude: null
+      FolderToScan: ""
+      IncludeExcludeFiles: true
+      ScannerGroup: default
+      CustomFields: []
+      BusinessOwners:
+        - Id: john@acme.com
+          Origin: local
+          Email: john@acme.com
+      ItOwners: []
+      Location: France
+      Scope: null
+      SecurityTier: "1"
+      SamplePercentage: "10"
+      ScanWindowName: ScanWindow
+      BucketName: Bukcet
+      FriendlyName: Hello
+      Description: Hello
+      NumberOfParsingThreads: "5"
+      OcrTimeout: 60
+      XLastDays: 7

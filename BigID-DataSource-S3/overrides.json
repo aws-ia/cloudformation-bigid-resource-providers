@@ -1,30 +1,41 @@
 {
   "CREATE": {
-    "/ParquetFileRegex": "",
+    "/ParquetFileRegex": "*",
     "/Name": "ThomasTestContract",
-    "/Owners": [],
     "/AwsAuthenticationType": "isCredentialsAuth",
     "/AwsAccessKey": "AHDSHJD%$87874",
-    "/AwsSecretKey": "QV4qXUr/DKDJSH*(&*DLKJL3489sLK",
+    "/AwsSecretKey": "SECRET",
     "/AwsRoleSessionName": null,
     "/AwsRoleArn": null,
     "/AwsSessionToken": null,
     "/AwsRegion": "eu-west-2",
     "/FileTypesToExclude": null,
     "/FolderToScan": "/",
+    "/IncludeExcludeFiles": true,
     "/ScannerGroup": "default",
     "/CustomFields": [],
-    "/BusinessOwners": [],
+    "/BusinessOwners": [
+      {
+        "Id": "john@acme.com",
+        "Origin": "local",
+        "Email": "john@acme.com"
+      }
+    ],
     "/ItOwners": [],
     "/Location": "France",
     "/Scope": null,
-    "/SecurityTier": "1"
+    "/SecurityTier": "1",
+    "/SamplePercentage": "10",
+    "/ScanWindowName": "ScanWindow",
+    "/BucketName": "Bukcet",
+    "/FriendlyName": "Hello",
+    "/Description": "Hello",
+    "/NumberOfParsingThreads": "5",
+    "/OcrTimeout": 60,
+    "/XLastDays": 7
   },
   "UPDATE": {
-    "/ParquetFileRegex": "",
-    "/Owners": [
-      "person@acme.com"
-    ],
+    "/ParquetFileRegex": "*",
     "/AwsAuthenticationType": "isCredentialsAuth",
     "/AwsAccessKey": "AHDSHJD%$87874",
     "/AwsSecretKey": "QV4qXUr/DKDJSH*(&*DLKJL3489sLK",
@@ -34,6 +45,15 @@
     "/AwsRegion": "eu-west-1",
     "/FileTypesToExclude": "png,gif,jpg",
     "/FolderToScan": "/path/to/folder",
+    "/BusinessOwners": [
+      {
+        "Id": "john@acme.com",
+        "Origin": "local",
+        "Email": "john@acme.com"
+      }
+    ],
+    "/ItOwners": [],
+    "/IncludeExcludeFiles": true,
     "/ScannerGroup": "default",
     "/CustomFields": [{
       "Name": "Username",
@@ -44,10 +64,16 @@
       "Value": "Bar",
       "Type": "encrypted"
     }],
-    "/BusinessOwners": [],
-    "/ItOwners": [],
+    "/FriendlyName": "Test Hello",
+    "/SamplePercentage": "10",
+    "/ScanWindowName": "ScanWindow",
+    "/BucketName": "Bukcet",
+    "/Description": "Hello",
+    "/NumberOfParsingThreads": "5",
     "/Location": "United Kingdom",
     "/Scope": null,
-    "/SecurityTier": "3"
+    "/SecurityTier": "3",
+    "/OcrTimeout": 30,
+    "/XLastDays": 7
   }
 }

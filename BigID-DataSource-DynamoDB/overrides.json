@@ -1,6 +1,6 @@
 {
   "CREATE": {
-    "/Name": "DynamoDBContractTest",
+    "/Name": "DynamoDBContractTests2",
     "/AuthenticationMethod": "Default",
     "/AwsAccessKey": "AHDSHJD%$87874",
     "/AwsSecretKey": "QV4qXUr/DKDJSH*(&*DLKJL3489sLK",
@@ -8,13 +8,28 @@
     "/AwsRegion": "eu-west-2",
     "/ScannerGroup": "default",
     "/CustomFields": [],
-    "/BusinessOwners": [],
     "/ItOwners": [],
     "/Location": "France",
-    "/Scope": null
+    "/BusinessOwners": [
+      {
+        "Id": "john@acme.com",
+        "Origin": "local",
+        "Email": "john@acme.com"
+      }
+    ],
+    "/Scope": null,
+    "/FriendlyName": "Hello",
+    "/Description": "description",
+    "/CredentialId": "lkdsjdfslj",
+    "/DynamodbTableNames": ["table1"],
+    "/SampleScanOnly": true,
+    "/NumberOfParsingThreads": "5",
+    "/ScanTimeoutInSeconds": 1,
+    "/ScanWindowName": "scan window",
+    "/RdbSampleDataMaxSize": "10000"
   },
   "UPDATE": {
-    "/AuthenticationMethod": "BigID",
+    "/AuthenticationMethod": "Default",
     "/AwsAccessKey": null,
     "/AwsSecretKey": null,
     "/AwsSessionToken": null,
@@ -44,6 +59,14 @@
         "Email": "bob@acme.com"
       }],
     "/Location": "United Kingdom",
-    "/Scope": null
+    "/Scope": null,
+    "/FriendlyName": "Hello",
+    "/Description": "description",
+    "/DynamodbTableNames": ["table1"],
+    "/SampleScanOnly": true,
+    "/NumberOfParsingThreads": "5",
+    "/ScanTimeoutInSeconds": 1,
+    "/ScanWindowName": "scan window",
+    "/RdbSampleDataMaxSize": "10000"
   }
 }
