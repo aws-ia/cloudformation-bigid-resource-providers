@@ -51,7 +51,8 @@ describe('BigIDClient', () => {
             expect(mockedAxios.request).toHaveBeenCalledWith(expect.objectContaining({
                 headers: {
                     Authorization: `${token}`,
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json',
+                    'User-Agent': 'AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation custom resource'
                 }
             }));
         });

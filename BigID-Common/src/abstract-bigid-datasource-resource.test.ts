@@ -48,7 +48,7 @@ describe('AbstractBigIdDatasourceResource', () => {
         let testInstance: TestAbstractBigIdDatasourceResource;
 
         beforeAll(() => {
-            testInstance = new TestAbstractBigIdDatasourceResource('foo', BaseModel, BaseModel);
+            testInstance = new TestAbstractBigIdDatasourceResource('foo', BaseModel, null, null, BaseModel);
         });
 
         it('throws a "NotFound" exception if the response is a 400 and contains "Unable to locate"', () => {
