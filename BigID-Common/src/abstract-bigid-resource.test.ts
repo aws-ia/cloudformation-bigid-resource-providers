@@ -48,7 +48,7 @@ describe('AbstractBigIdResource', () => {
         let testInstance: TestAbstractBigIdResource;
 
         beforeAll(() => {
-            testInstance = new TestAbstractBigIdResource('foo', BaseModel, BaseModel);
+            testInstance = new TestAbstractBigIdResource('foo', BaseModel, null, null, BaseModel);
         });
 
         it.each([
