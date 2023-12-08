@@ -1,39 +1,124 @@
 # BigID::DataSource::DynamoDB
 
-Congratulations on starting development! Next steps:
+This resource type manages a [custom BigID DynamoDB Data Source configuration][3]
+## Prerequisites
+* [AWS Account][14]
+* [AWS CLI][15]
+* [BigID account][16] and [Domain, Username and Password][17]
+## AWS Management Console
 
-1. Write the JSON schema describing your resource, [bigid-datasource-dynamodb.json](./bigid-datasource-dynamodb.json)
-2. Implement your resource handlers in [handlers.ts](./bigid-datasource-dynamodb/handlers.ts)
+To get started:
 
-> Don't modify [models.ts](./bigid-datasource-dynamodb/models.ts) by hand, any modifications will be overwritten when the `generate` or `package` commands are run.
+1. Sign in to the [AWS Management Console][11] with your account and navigate to CloudFormation.
 
-Implement CloudFormation resource here. Each function must always return a ProgressEvent.
+2. Select "Public extensions" from the left hand pane and filter Publisher by "Third Party".
 
-```typescript
-const progress = ProgressEvent.builder<ProgressEvent<ResourceModel>>()
+3. Use the search bar to filter by the "BigID" prefix.
 
-    // Required
-    // Must be one of OperationStatus.InProgress, OperationStatus.Failed, OperationStatus.Success
-    .status(OperationStatus.InProgress)
-    // Required on SUCCESS (except for LIST where resourceModels is required)
-    // The current resource model after the operation; instance of ResourceModel class
-    .resourceModel(model)
-    .resourceModels(null)
-    // Required on FAILED
-    // Customer-facing message, displayed in e.g. CloudFormation stack events
-    .message('')
-    // Required on FAILED a HandlerErrorCode
-    .errorCode(HandlerErrorCode.InternalFailure)
-    // Optional
-    // Use to store any state between re-invocation via IN_PROGRESS
-    .callbackContext({})
-    // Required on IN_PROGRESS
-    // The number of seconds to delay before re-invocation
-    .callbackDelaySeconds(0)
+  Note: All official  BigID resources begin with `BigID::` and specify that they are `Published by BigID`.
 
-    .build()
+4. Select the desired resource name to view more information about its schema, and click **Activate**.
+
+5. On the **Extension details** page, specify:
+  - Extension name
+  - Execution role ARN
+  - Automatic updates for minor version releases
+  - Configuration
+
+6. In your terminal, specify the configuration data for the registered BigID CloudFormation resource type, in the given account and region by using the **SetTypeConfiguration** operation:
+
+
+  For example:
+
+  ```Bash
+  $ aws cloudformation set-type-configuration \
+  --region us-west-2 --type RESOURCE \
+  --type-name BigID::DataSource::DynamoDB \
+  --configuration-alias default \
+  --configuration "{ \"BigIdAccess\":{\"Domain\":\"https://api123.bigId.com\",\"Username\":\"User123\",\"Password\":\"Pass123\" }}"
+  ```
+
+7. After you have your resource configured, [create your AWS stack][12] that includes any of the activated BigID resources.
+
+For more information about available commands and workflows, see the official [AWS documentation][13].
+
+## Supported regions
+
+The BigID CloudFormation resources are available on the CloudFormation Public Registry in the following regions:
+
+| Code            | Name                      |
+|-----------------|---------------------------|
+| us-east-1       | US East (N. Virginia)     |
+| us-east-2       | US East (Ohio)            |
+| us-west-1       | US West (N. California)   |
+| us-west-2       | US West (Oregon)          |
+| ap-south-1      | Asia Pacific (Mumbai)     |
+| ap-northeast-1  | Asia Pacific (Tokyo)      |
+| ap-northeast-2  | Asia Pacific (Seoul)      |
+| ap-southeast-1  | Asia Pacific (Singapore)  |
+| ap-southeast-2  | Asia Pacific (Sydney)     |
+| ca-central-1    | Canada (Central)          |
+| eu-central-1    | Europe (Frankfurt)        |
+| eu-west-1       | Europe (Ireland)          |
+| eu-west-2       | Europe (London)           |
+| eu-west-3       | Europe (Paris)            |
+| eu-north-1      | Europe (Stockholm)        |
+| sa-east-1       | South America (São Paulo) |
+
+**Note**: To privately register a resource in any other region, use the provided packages.
+
+## Examples
+### Shows how to set S3 Data Source configuration in BigID.
+```yaml
+---
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Shows how to set S3 Data Source configuration in BigID.
+Resources:
+  AgentConfigurationSample:
+    Type: BigID::DataSource::DynamoDB
+    Properties:
+        ParquetFileRegex: *
+        Name: CTv2TestName
+        AwsAuthenticationType: isCredentialsAuth
+        AwsAccessKey: 123abc
+        AwsSecretKey: 123abc
+        AwsRegion: eu-west-2
+        FolderToScan: /
+        IncludeExcludeFiles: true
+        ScannerGroup: default
+        CustomFields: 
+          - Name: Username
+            Value: Foo
+            Type: clear
+          - Name: Password
+            Value: Bar
+            Type: encrypted
+        BusinessOwners: 
+          - Id: john@acme.com
+            Origin: local
+            Email: john@acme.com
+        Location: France
+        SecurityTier: 1
+        SamplePercentage: 10
+        ScanWindowName: ScanWindow
+        BucketName: Bukcet
+        FriendlyName: Hello
+        Description: Hello
+        NumberOfParsingThreads: 5
+        OcrTimeout: 60
+        XLastDays: 7
 ```
 
-While importing the [@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib](https://github.com/eduardomourar/cloudformation-cli-typescript-plugin) library, failures can be passed back to CloudFormation by either raising an exception from `exceptions`, or setting the ProgressEvent's `status` to `OperationStatus.Failed` and `errorCode` to one of `HandlerErrorCode`. There is a static helper function, `ProgressEvent.failed`, for this common case.
 
-Keep in mind, during runtime all logs will be delivered to CloudWatch if you use the `log()` method from `LoggerProxy` class.
+[1]: https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/resource-types.html
+[2]: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html
+[3]: https://developer.bigid.com/wiki/BigID_API/Add_Data_Source_Tutorial
+[4]: ./docs/README.md
+[11]: https://aws.amazon.com/console/
+[12]: https://console.aws.amazon.com/cloudformation/home
+[13]: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html
+[14]: https://aws.amazon.com/account/
+[15]: https://aws.amazon.com/cli/
+[16]: https://bigid.com/
+[17]: https://developer.bigid.com/wiki/BigID_API/API_Tutorial#User_Authentication
